@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[一切从简 Blog]]></title>
+  <link href="http://zqpmaster.github.io/atom.xml" rel="self"/>
+  <link href="http://zqpmaster.github.io/"/>
+  <updated>2014-09-08T17:22:14+08:00</updated>
+  <id>http://zqpmaster.github.io/</id>
+  <author>
+    <name><![CDATA[一切从简]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[如何搭建Octopress]]></title>
+    <link href="http://zqpmaster.github.io/blog/2014/09/08/ru-he-da-jian-octopress/"/>
+    <updated>2014-09-08T17:16:42+08:00</updated>
+    <id>http://zqpmaster.github.io/blog/2014/09/08/ru-he-da-jian-octopress</id>
+    <content type="html"><![CDATA[<p>我靠，整死哥了、</p>
+]]></content>
+  </entry>
+  
+</feed>
