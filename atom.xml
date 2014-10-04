@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[一切从简 Blog]]></title>
-  <link href="http://zqpmaster.github.io/atom.xml" rel="self"/>
-  <link href="http://zqpmaster.github.io/"/>
-  <updated>2014-10-04T15:17:28+08:00</updated>
-  <id>http://zqpmaster.github.io/</id>
+  <title><![CDATA[一切从简]]></title>
+  <link href="http://http://zqpmaster.gitcafe.com/atom.xml" rel="self"/>
+  <link href="http://http://zqpmaster.gitcafe.com/"/>
+  <updated>2014-10-04T16:01:34+08:00</updated>
+  <id>http://http://zqpmaster.gitcafe.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
     <email><![CDATA[274430533@qq.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Block, weakSelf and strongSelf]]></title>
-    <link href="http://zqpmaster.github.io/blog/2014/10/04/block/"/>
+    <link href="http://http://zqpmaster.gitcafe.com/blog/2014/10/04/block/"/>
     <updated>2014-10-04T15:07:23+08:00</updated>
-    <id>http://zqpmaster.github.io/blog/2014/10/04/block</id>
+    <id>http://http://zqpmaster.gitcafe.com/blog/2014/10/04/block</id>
     <content type="html"><![CDATA[<p>Block is powerful in Objective-C. But there is a very stupid problem called cyclic retention pitfall, that a block locked an object so that the object will never be release.</p>
 
 <p>For example, in the function:</p>
@@ -141,9 +141,9 @@ NSBlockOperation *op = [[[NSBlockOperation alloc] init] autorelease];
   
   <entry>
     <title type="html"><![CDATA[如何完整更改XCODE5中iOS的工程名字]]></title>
-    <link href="http://zqpmaster.github.io/blog/2014/09/08/ru-he-wan-zheng-geng-gai-xcode5zhong-iosde-gong-cheng-ming-zi/"/>
+    <link href="http://http://zqpmaster.gitcafe.com/blog/2014/09/08/ru-he-wan-zheng-geng-gai-xcode5zhong-iosde-gong-cheng-ming-zi/"/>
     <updated>2014-09-08T18:18:49+08:00</updated>
-    <id>http://zqpmaster.github.io/blog/2014/09/08/ru-he-wan-zheng-geng-gai-xcode5zhong-iosde-gong-cheng-ming-zi</id>
+    <id>http://http://zqpmaster.gitcafe.com/blog/2014/09/08/ru-he-wan-zheng-geng-gai-xcode5zhong-iosde-gong-cheng-ming-zi</id>
     <content type="html"><![CDATA[<p>在用Xcode开发软件的时候难免会碰到项目更名的时候，重新更名目标名还是比较方便的，如何正确的更改「xcodeproj」的项目名还有对应的目录名字呢？</p>
 
 <p>首先要做的是备份一下整个工程文件，防止一旦更名失败还有办法补救，不然一切都毁了。</p>

@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://zqpmaster.github.io/sitemap.xml 
+Sitemap: http://http://zqpmaster.gitcafe.com/sitemap.xml 
