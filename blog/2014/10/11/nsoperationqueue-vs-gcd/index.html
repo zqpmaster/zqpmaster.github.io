@@ -1,4 +1,78 @@
-<p>首先，我们要明确NSOperationQueue与GCD之间的关系</p>
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>NSOperationQueue vs GCD - 一切从简</title>
+  <meta name="author" content="一切从简">
+
+  
+  <meta name="description" content="首先，我们要明确NSOperationQueue与GCD之间的关系 NSOpertaionQueue用GCD构建封装的，是GCD的高级抽象。
+其次，我们要区别两者的不同 GCD仅仅支持FIFO队列，而NSOperationQueue中的队列可以被重新设置优先级，从而实现不同操作的执行顺序调整。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.sheliw.com/blog/2014/10/11/nsoperationqueue-vs-gcd">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="一切从简" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">一切从简</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">所有文章</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">NSOperationQueue vs GCD</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-11T10:49:58+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:49 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>首先，我们要明确NSOperationQueue与GCD之间的关系</p>
 
 <p>NSOpertaionQueue用GCD构建封装的，是GCD的高级抽象。
 其次，我们要区别两者的不同</p>
@@ -19,3 +93,122 @@ GCD更接近底层，而NSOperationQueue则更高级抽象，所以GCD在追求�
 
 <p>最后的一句话
 别忘了高德纳的教诲：“在大概97%的时间里，我们应该忘记微小的性能提升。过早优化是万恶之源。”只有Instruments显示有真正的性能提升时才有必要用低级的GCD。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">一切从简</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-10-11T10:49:58+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:49 am</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/10/04/block/" title="Previous Post: Block, weakSelf and strongSelf">&laquo; Block, weakSelf and strongSelf</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/10/11/nsoperationqueue-vs-gcd/">NSOperationQueue vs GCD</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/04/block/">Block, weakSelf and strongSelf</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/08/ru-he-wan-zheng-geng-gai-xcode5zhong-iosde-gong-cheng-ming-zi/">如何在Xcode5中完整更改iOS工程的名称</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>iOS，OSX开发者<br />
+  <br /><a href="http://weibo.com/u/1864993670">新浪微博</a>
+  <br /><a href="https://github.com/zqpmaster">GitHub</a>
+</p>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - 一切从简 -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'zqpsea';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.sheliw.com/blog/2014/10/11/nsoperationqueue-vs-gcd/';
+        var disqus_url = 'http://blog.sheliw.com/blog/2014/10/11/nsoperationqueue-vs-gcd/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

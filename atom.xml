@@ -4,7 +4,7 @@
   <title><![CDATA[一切从简]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2014-10-11T10:51:57+08:00</updated>
+  <updated>2014-10-11T10:53:29+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -14,9 +14,9 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Nsoperationqueue vs Gcd]]></title>
+    <title type="html"><![CDATA[NSOperationQueue vs GCD]]></title>
     <link href="http://blog.sheliw.com/blog/2014/10/11/nsoperationqueue-vs-gcd/"/>
-    <updated>2014-10-11T00:00:00+08:00</updated>
+    <updated>2014-10-11T10:49:58+08:00</updated>
     <id>http://blog.sheliw.com/blog/2014/10/11/nsoperationqueue-vs-gcd</id>
     <content type="html"><![CDATA[<p>首先，我们要明确NSOperationQueue与GCD之间的关系</p>
 
