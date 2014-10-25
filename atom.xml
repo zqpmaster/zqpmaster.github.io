@@ -4,7 +4,7 @@
   <title><![CDATA[一切从简]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2014-10-25T13:33:19+08:00</updated>
+  <updated>2014-10-25T13:49:28+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -12,6 +12,27 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[如何使用XIB设置视图的更多属性]]></title>
+    <link href="http://blog.sheliw.com/blog/2014/10/25/ru-he-shi-yong-xibshe-zhi-shi-tu-de-geng-duo-shu-xing/"/>
+    <updated>2014-10-25T13:37:20+08:00</updated>
+    <id>http://blog.sheliw.com/blog/2014/10/25/ru-he-shi-yong-xibshe-zhi-shi-tu-de-geng-duo-shu-xing</id>
+    <content type="html"><![CDATA[<p>最近遇到了将ScrollView放在XIB的视图里，用代码设置contentSize后，scrollView不能滑动的问题。费了很大劲之后找到正确的办法，并且发现XIB的一个极为实用的技巧。如果想用XIB设置视图更多的属性。可以使用Identity inspector下的User Defined Runtime Attribute.添加一些KeyPath.</p>
+
+<p>1.在XIB里选中视图。</p>
+
+<p>2.切换到Identity inspector, 新建一个新的User Defined Runtime Attribute (点击  + 按钮)。</p>
+
+<p>3.双击Key Path,改为要设置的属性。</p>
+
+<p>4.双机Type，改为要设置的属性的类型.</p>
+
+<p>5.更改Value为要设置的值。</p>
+
+<p>Swift语言貌似可以使用@IBInspectable和@IBDesignable 直接在Storyboard和Xib里添加设置选项</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[正方教务管理系统IOS客户端]]></title>
@@ -45,8 +66,11 @@ TFHpple *xpathParser = [[TFHpple alloc]initWithHTMLData:htmlDataUTF8];</code></p
 
 
 <p>
-成绩页面修改的方式有所不同
-        <pre><code>  NSString *utf8HtmlStr = [transStr stringByReplacingOccurrencesOfString:@&ldquo;content=\"text/html; charset=gb2312\&rdquo; http-equiv=\&ldquo;Content-Type\&rdquo;>&ldquo; withString:@"http-equiv=\"Content-Type\&rdquo; content=\&ldquo;text/html; charset=utf-8\&rdquo;>&ldquo;];</code></pre></p>
+成绩页面修改的方式有所不同</p>
+
+<pre><code>
+NSString *utf8HtmlStr = [transStr stringByReplacingOccurrencesOfString:@"content=\"text/html; charset=gb2312\" http-equiv=\"Content-Type\">" withString:@"http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"];</code></pre>
+
 
 <p>其他页面要怎么替换具体要看页面头部具体的信息是什么，然后写在 stringByReplacingOccurrencesOfString方法第一个参数部分就可以。</p>
 
@@ -117,15 +141,12 @@ NSDictionary *parameters = @{@"__VIEWSTATE":self.viewState,@"txtUserName"self.xu
     <id>http://blog.sheliw.com/blog/2014/10/25/ru-he-zai-cocos2d-xyou-xi-li-ji-cheng-iadyan-gao</id>
     <content type="html"><![CDATA[<p>1) Link binary with iAd.framework<a href="https://developer.apple.com/library/ios/#recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html">https://developer.apple.com/library/ios/#recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html</a></p>
 
-<ol>
-<li> In the project navigator, select your project</li>
-<li> Select your target</li>
-<li>  Select the &lsquo;Build Phases&rsquo; tab</li>
-<li>  Open &lsquo;Link Binaries With Libraries&rsquo; expander</li>
-<li>  Click the &lsquo;+&rsquo; button</li>
-<li>  Select iAd.framework</li>
-</ol>
-
+<pre><code>1. In the project navigator, select your project
+2. Select your target
+3.  Select the 'Build Phases' tab
+4.  Open 'Link Binaries With Libraries' expander    5.  Click the '+' button
+6.  Select iAd.framework
+</code></pre>
 
 <p>2) Download iAdSuite<a href="https://developer.apple.com/library/ios/#samplecode/iAdSuite/Introduction/Intro.html">https://developer.apple.com/library/ios/#samplecode/iAdSuite/Introduction/Intro.html</a> and copy files BannerViewController.h and BannerViewController.m from ContainerBanner project to your project.</p>
 

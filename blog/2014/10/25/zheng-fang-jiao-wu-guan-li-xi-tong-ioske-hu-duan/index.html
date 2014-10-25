@@ -99,8 +99,11 @@ TFHpple *xpathParser = [[TFHpple alloc]initWithHTMLData:htmlDataUTF8];</code></p
 
 
 <p>
-成绩页面修改的方式有所不同
-        <pre><code>  NSString *utf8HtmlStr = [transStr stringByReplacingOccurrencesOfString:@&ldquo;content=\"text/html; charset=gb2312\&rdquo; http-equiv=\&ldquo;Content-Type\&rdquo;>&ldquo; withString:@"http-equiv=\"Content-Type\&rdquo; content=\&ldquo;text/html; charset=utf-8\&rdquo;>&ldquo;];</code></pre></p>
+成绩页面修改的方式有所不同</p>
+
+<pre><code>
+NSString *utf8HtmlStr = [transStr stringByReplacingOccurrencesOfString:@"content=\"text/html; charset=gb2312\" http-equiv=\"Content-Type\">" withString:@"http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"];</code></pre>
+
 
 <p>其他页面要怎么替换具体要看页面头部具体的信息是什么，然后写在 stringByReplacingOccurrencesOfString方法第一个参数部分就可以。</p>
 
@@ -194,6 +197,8 @@ NSDictionary *parameters = @{@"__VIEWSTATE":self.viewState,@"txtUserName"self.xu
         <a class="basic-alignment left" href="/blog/2014/10/25/ru-he-zai-cocos2d-xyou-xi-li-ji-cheng-iadyan-gao/" title="Previous Post: 如何在Cocos2d-x游戏里集成iAd广告">&laquo; 如何在Cocos2d-x游戏里集成iAd广告</a>
       
       
+        <a class="basic-alignment right" href="/blog/2014/10/25/ru-he-shi-yong-xibshe-zhi-shi-tu-de-geng-duo-shu-xing/" title="Next Post: 如何使用XIB设置视图的更多属性">如何使用XIB设置视图的更多属性 &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -213,6 +218,10 @@ NSDictionary *parameters = @{@"__VIEWSTATE":self.viewState,@"txtUserName"self.xu
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/10/25/ru-he-shi-yong-xibshe-zhi-shi-tu-de-geng-duo-shu-xing/">如何使用XIB设置视图的更多属性</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/10/25/zheng-fang-jiao-wu-guan-li-xi-tong-ioske-hu-duan/">正方教务管理系统IOS客户端</a>
       </li>
     
@@ -226,10 +235,6 @@ NSDictionary *parameters = @{@"__VIEWSTATE":self.viewState,@"txtUserName"self.xu
     
       <li class="post">
         <a href="/blog/2014/10/04/block/">Block, weakSelf and strongSelf</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/08/ru-he-wan-zheng-geng-gai-xcode5zhong-iosde-gong-cheng-ming-zi/">如何在Xcode5中完整更改iOS工程的名称</a>
       </li>
     
   </ul>

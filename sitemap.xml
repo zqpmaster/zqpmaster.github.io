@@ -3,6 +3,14 @@
   
   
   <url>
+    <loc>http://blog.sheliw.com/blog/2014/10/25/ru-he-shi-yong-xibshe-zhi-shi-tu-de-geng-duo-shu-xing/</loc>
+    
+    <lastmod>2014-10-25T13:37:20+08:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://blog.sheliw.com/blog/2014/10/25/zheng-fang-jiao-wu-guan-li-xi-tong-ioske-hu-duan/</loc>
     
     <lastmod>2014-10-25T13:16:47+08:00</lastmod>
@@ -45,21 +53,21 @@
   
   <url>
     <loc>http://blog.sheliw.com/blog/archives/</loc>
-    <lastmod>2014-10-25T13:33:19+08:00</lastmod>
+    <lastmod>2014-10-25T13:49:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://blog.sheliw.com/</loc>
-    <lastmod>2014-10-25T13:33:19+08:00</lastmod>
+    <lastmod>2014-10-25T13:49:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://blog.sheliw.com/blog/categories/</loc>
-    <lastmod>2014-10-25T13:33:19+08:00</lastmod>
+    <lastmod>2014-10-25T13:49:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
