@@ -4,7 +4,7 @@
   <title><![CDATA[一切从简]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2014-10-25T13:27:24+08:00</updated>
+  <updated>2014-10-25T13:33:19+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -22,30 +22,30 @@
 
 <p>用到的几个工具</p>
 
-<ul>
-<li>chrome的开发者工具   查看每次HTTP请求命令与参数等。</li>
-<li>AFNetworking    ios网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI好像好久没有更新。</li>
-<li>TFhepple    Html分析类库。</li>
-</ul>
-
+<pre><code>- chrome的开发者工具   查看每次HTTP请求命令与参数等。
+- AFNetworking    ios网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI好像好久没有更新。
+- TFhepple    Html分析类库。
+</code></pre>
 
 <p>正方教务系统因为没有对应的JSON或者XML数据接口，所以只能模拟网页的所有行为，获取html 分析html。
 正方教务系统用的编码是GB2312 框架获取下来的NSString虽然已经自动解码，但是很不稳定，有时候会得到空字符串，但是获取下来的DATA就没有这个问题，所以就要手动解码将DATA转为NSString。</p>
 
-<p> <pre><code>cess:^(AFHTTPRequestOperation <em>operation, id responseObject) {
-                 NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding (kCFStringEncodingGB_18030_2000);               <br/>
-                 NSData </em>data=responseObject;
-                 NSString *transStr=[[NSString alloc]initWithData:data encoding:enc];</code></pre>
-光转码也不行，在分析HTML的时候因为网页头部的编码信息也有问题，所以要做手动修改，这样才能被TFhepple正确解
+<pre><code>NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);                 
+NSData *data=responseObject;
+NSString *transStr=[[NSString alloc]initWithData:data encoding:enc];&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+
+<p>光转码也不行，在分析HTML的时候因为网页头部的编码信息也有问题，所以要做手动修改，这样才能被TFhepple正确解
 析。</p>
 
 <pre><code> 
  NSString *utf8HtmlStr = [transStr stringByReplacingOccurrencesOfString:@"http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\">" withString:@"http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"];
-              NSData *htmlDataUTF8 = [utf8HtmlStr dataUsingEncoding:NSUTF8StringEncoding];
-              TFHpple *xpathParser = [[TFHpple alloc]initWithHTMLData:htmlDataUTF8];</code></pre>
+NSData *htmlDataUTF8 = [utf8HtmlStr dataUsingEncoding:NSUTF8StringEncoding];
+TFHpple *xpathParser = [[TFHpple alloc]initWithHTMLData:htmlDataUTF8];</code></pre>
 
 
-<p>成绩页面修改的方式有所不同
+<p>
+成绩页面修改的方式有所不同
         <pre><code>  NSString *utf8HtmlStr = [transStr stringByReplacingOccurrencesOfString:@&ldquo;content=\"text/html; charset=gb2312\&rdquo; http-equiv=\&ldquo;Content-Type\&rdquo;>&ldquo; withString:@"http-equiv=\"Content-Type\&rdquo; content=\&ldquo;text/html; charset=utf-8\&rdquo;>&ldquo;];</code></pre></p>
 
 <p>其他页面要怎么替换具体要看页面头部具体的信息是什么，然后写在 stringByReplacingOccurrencesOfString方法第一个参数部分就可以。</p>
@@ -55,19 +55,14 @@
 获取cookie</p>
 
 <pre><code> 
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"
-http://学校的网址/default2.aspx
-"]];
-                                              //  cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+ NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"
+http://学校的网址/default2.aspx"]];
+//  cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                             //timeoutInterval:3];
-       
-       [NSURLConnection sendSynchronousRequest:request
-                             returningResponse:nil
-                                         error:nil];
-       
-       NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-       NSArray *cookies =[cookieJar cookies];
-       _cookieDictionary= [NSHTTPCookie requestHeaderFieldsWithCookies:cookies];
+[NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+NSArray *cookies =[cookieJar cookies];
+_cookieDictionary= [NSHTTPCookie requestHeaderFieldsWithCookies:cookies];
 </code></pre>
 
 
@@ -81,10 +76,10 @@ http://学校的网址/default2.aspx
                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:@"POST" URLString:[[NSURL URLWithString:URLString relativeToURL:self.baseURL] absoluteString] parameters:parameters error:nil];
-//
     if(self.cookieDictionary) {
         [request setHTTPShouldHandleCookies:NO];
         [request setAllHTTPHeaderFields:self.cookieDictionary];
+    }
 </code></pre>
 
 
@@ -104,10 +99,9 @@ NSDictionary *parameters = @{@"__VIEWSTATE":self.viewState,@"txtUserName"self.xu
 
 <pre><code> 
    if(self.cookieDictionary) {
-        NSMutableDictionary*newDictionary=[self.cookieDictionary mutableCopy];
+        NSMutableDictionary *newDictionary=[self.cookieDictionary mutableCopy];
         [newDictionary setValue:@"http://gdjwgl.bjut.edu.cn/xs_main.aspx?xh=11111111" forKey:@"Referer"];
-        [request setAllHTTPHeaderFields:newDictionary];
-        
+        [request setAllHTTPHeaderFields:newDictionary];   
     }
 </code></pre>
 
