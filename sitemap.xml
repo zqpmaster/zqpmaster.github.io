@@ -35,6 +35,14 @@
   </url>
   
   <url>
+    <loc>http://blog.sheliw.com/blog/2014/10/06/guo-qing-za-tan/</loc>
+    
+    <lastmod>2014-10-06T17:20:42+08:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://blog.sheliw.com/blog/2014/10/04/block/</loc>
     
     <lastmod>2014-10-04T15:07:23+08:00</lastmod>
@@ -53,21 +61,21 @@
   
   <url>
     <loc>http://blog.sheliw.com/blog/archives/</loc>
-    <lastmod>2014-10-25T13:53:31+08:00</lastmod>
+    <lastmod>2014-10-25T14:16:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://blog.sheliw.com/</loc>
-    <lastmod>2014-10-25T13:53:31+08:00</lastmod>
+    <lastmod>2014-10-25T14:16:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://blog.sheliw.com/blog/categories/</loc>
-    <lastmod>2014-10-25T13:53:31+08:00</lastmod>
+    <lastmod>2014-10-25T14:16:54+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
