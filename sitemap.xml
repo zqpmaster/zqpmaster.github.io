@@ -3,6 +3,22 @@
   
   
   <url>
+    <loc>http://blog.sheliw.com/blog/2014/10/25/zheng-fang-jiao-wu-guan-li-xi-tong-ioske-hu-duan/</loc>
+    
+    <lastmod>2014-10-25T13:16:47+08:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.sheliw.com/blog/2014/10/25/ru-he-zai-cocos2d-xyou-xi-li-ji-cheng-iadyan-gao/</loc>
+    
+    <lastmod>2014-10-25T12:54:03+08:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://blog.sheliw.com/blog/2014/10/11/nsoperationqueue-vs-gcd/</loc>
     
     <lastmod>2014-10-11T10:49:58+08:00</lastmod>
@@ -29,21 +45,21 @@
   
   <url>
     <loc>http://blog.sheliw.com/blog/archives/</loc>
-    <lastmod>2014-10-19T10:19:24+08:00</lastmod>
+    <lastmod>2014-10-25T13:19:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://blog.sheliw.com/</loc>
-    <lastmod>2014-10-19T10:19:24+08:00</lastmod>
+    <lastmod>2014-10-25T13:19:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://blog.sheliw.com/blog/categories/</loc>
-    <lastmod>2014-10-19T10:19:24+08:00</lastmod>
+    <lastmod>2014-10-25T13:19:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
