@@ -9,7 +9,7 @@
   <meta name="author" content="一切从简">
 
   
-  <meta name="description" content="1) Link binary with iAd.frameworkhttps://developer.apple.com/library/ios/#recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html 1. &hellip;">
+  <meta name="description" content="1) Link binary with iAd.frameworkhttps://developer.apple.com/library/ios/#recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html In &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -73,13 +73,15 @@
 
 <div class="entry-content"><p>1) Link binary with iAd.framework<a href="https://developer.apple.com/library/ios/#recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html">https://developer.apple.com/library/ios/#recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html</a></p>
 
-<pre><code>1.    In the project navigator, select your project
-2.    Select your target
-3.    Select the 'Build Phases' tab
-4.    Open 'Link Binaries With Libraries' expander
-5.    Click the '+' button
-6.    Select iAd.framework
-</code></pre>
+<ol>
+<li> In the project navigator, select your project</li>
+<li> Select your target</li>
+<li>  Select the &lsquo;Build Phases&rsquo; tab</li>
+<li>  Open &lsquo;Link Binaries With Libraries&rsquo; expander</li>
+<li>  Click the &lsquo;+&rsquo; button</li>
+<li>  Select iAd.framework</li>
+</ol>
+
 
 <p>2) Download iAdSuite<a href="https://developer.apple.com/library/ios/#samplecode/iAdSuite/Introduction/Intro.html">https://developer.apple.com/library/ios/#samplecode/iAdSuite/Introduction/Intro.html</a> and copy files BannerViewController.h and BannerViewController.m from ContainerBanner project to your project.</p>
 
@@ -97,25 +99,22 @@
 
 <pre><code>@implementationAppController
 {
-BannerViewController*_bannerViewController;
-
+    BannerViewController*_bannerViewController;
 }
 </code></pre>
 
 <p>and</p>
 
 <pre><code>// Set RootViewController to window
-if(
- [[UIDevicecurrentDevice].systemVersionfloatValue]
- &lt; 6.0)
+if([[UIDevicecurrentDevice].systemVersionfloatValue]&lt; 6.0)
 {
 //
  warning: addSubView doesn't work on iOS6
-[window addSubview:viewController.view];
+    [window addSubview:viewController.view];
 }else
 {
 //use this method on ios6
-[windowsetRootViewController:viewController];
+    [window setRootViewController:viewController];
 }
 </code></pre>
 
@@ -146,22 +145,22 @@ with
 <code><pre>
 -(id)initWithNibName:(NSString<em>)nibNameOrNil bundle:(NSBundle</em>)nibBundleOrNil
  {
-if((self=[super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])){
-[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(willBeginBannerViewActionNotification:) name:BannerViewActionWillBegin object:nil];
+    if((self=[super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])){
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(willBeginBannerViewActionNotification:)    name:BannerViewActionWillBegin object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didFinishBannerViewActionNotification:)name:BannerViewActionDidFinisho bject:nil];
 }
- return self;
+    return self;
 }
 </code></pre></p>
 
 <p>and add the following methods
 <code><pre>
 -(void)willBeginBannerViewActionNotification:(NSNotification<em>)notification{
-  NSLog(@&ldquo;willBeginBannerViewActionNotification&rdquo;);
+    NSLog(@&ldquo;willBeginBannerViewActionNotification&rdquo;);
 }
 -(void)didFinishBannerViewActionNotification:(NSNotification</em>)notification
 {
-NSLog(@&ldquo;didFinishBannerViewActionNotification&rdquo;);
+    NSLog(@&ldquo;didFinishBannerViewActionNotification&rdquo;);
 }
 </code></pre></p>
 
@@ -187,9 +186,8 @@ NSLog(@&ldquo;didFinishBannerViewActionNotification&rdquo;);
    [self addChildViewController:<em>contentController];
    [contentView addSubview:</em>contentController.view];
    [<em>contentController didMoveToParentViewController:self];
-   [contentView addSubview:</em>bannerView];</p>
-
-<p>   self.view=contentView;
+   [contentView addSubview:</em>bannerView];
+   self.view=contentView;
 }</code></pre>
 2) Edit viewDidLayoutSubviews method and replace
 <code><pre>

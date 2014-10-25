@@ -4,7 +4,7 @@
   <title><![CDATA[一切从简]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2014-10-25T13:19:22+08:00</updated>
+  <updated>2014-10-25T13:27:24+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -22,10 +22,12 @@
 
 <p>用到的几个工具</p>
 
-<pre><code>- chrome的开发者工具   查看每次HTTP请求命令与参数等。
-- AFNetworking    ios网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI好像好久没有更新。
-- TFhepple    Html分析类库。
-</code></pre>
+<ul>
+<li>chrome的开发者工具   查看每次HTTP请求命令与参数等。</li>
+<li>AFNetworking    ios网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI好像好久没有更新。</li>
+<li>TFhepple    Html分析类库。</li>
+</ul>
+
 
 <p>正方教务系统因为没有对应的JSON或者XML数据接口，所以只能模拟网页的所有行为，获取html 分析html。
 正方教务系统用的编码是GB2312 框架获取下来的NSString虽然已经自动解码，但是很不稳定，有时候会得到空字符串，但是获取下来的DATA就没有这个问题，所以就要手动解码将DATA转为NSString。</p>
@@ -121,13 +123,15 @@ NSDictionary *parameters = @{@"__VIEWSTATE":self.viewState,@"txtUserName"self.xu
     <id>http://blog.sheliw.com/blog/2014/10/25/ru-he-zai-cocos2d-xyou-xi-li-ji-cheng-iadyan-gao</id>
     <content type="html"><![CDATA[<p>1) Link binary with iAd.framework<a href="https://developer.apple.com/library/ios/#recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html">https://developer.apple.com/library/ios/#recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html</a></p>
 
-<pre><code>1.    In the project navigator, select your project
-2.    Select your target
-3.    Select the 'Build Phases' tab
-4.    Open 'Link Binaries With Libraries' expander
-5.    Click the '+' button
-6.    Select iAd.framework
-</code></pre>
+<ol>
+<li> In the project navigator, select your project</li>
+<li> Select your target</li>
+<li>  Select the &lsquo;Build Phases&rsquo; tab</li>
+<li>  Open &lsquo;Link Binaries With Libraries&rsquo; expander</li>
+<li>  Click the &lsquo;+&rsquo; button</li>
+<li>  Select iAd.framework</li>
+</ol>
+
 
 <p>2) Download iAdSuite<a href="https://developer.apple.com/library/ios/#samplecode/iAdSuite/Introduction/Intro.html">https://developer.apple.com/library/ios/#samplecode/iAdSuite/Introduction/Intro.html</a> and copy files BannerViewController.h and BannerViewController.m from ContainerBanner project to your project.</p>
 
@@ -145,25 +149,22 @@ NSDictionary *parameters = @{@"__VIEWSTATE":self.viewState,@"txtUserName"self.xu
 
 <pre><code>@implementationAppController
 {
-BannerViewController*_bannerViewController;
-
+    BannerViewController*_bannerViewController;
 }
 </code></pre>
 
 <p>and</p>
 
 <pre><code>// Set RootViewController to window
-if(
- [[UIDevicecurrentDevice].systemVersionfloatValue]
- &lt; 6.0)
+if([[UIDevicecurrentDevice].systemVersionfloatValue]&lt; 6.0)
 {
 //
  warning: addSubView doesn't work on iOS6
-[window addSubview:viewController.view];
+    [window addSubview:viewController.view];
 }else
 {
 //use this method on ios6
-[windowsetRootViewController:viewController];
+    [window setRootViewController:viewController];
 }
 </code></pre>
 
@@ -194,22 +195,22 @@ with
 <code><pre>
 -(id)initWithNibName:(NSString<em>)nibNameOrNil bundle:(NSBundle</em>)nibBundleOrNil
  {
-if((self=[super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])){
-[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(willBeginBannerViewActionNotification:) name:BannerViewActionWillBegin object:nil];
+    if((self=[super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])){
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(willBeginBannerViewActionNotification:)    name:BannerViewActionWillBegin object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didFinishBannerViewActionNotification:)name:BannerViewActionDidFinisho bject:nil];
 }
- return self;
+    return self;
 }
 </code></pre></p>
 
 <p>and add the following methods
 <code><pre>
 -(void)willBeginBannerViewActionNotification:(NSNotification<em>)notification{
-  NSLog(@&ldquo;willBeginBannerViewActionNotification&rdquo;);
+    NSLog(@&ldquo;willBeginBannerViewActionNotification&rdquo;);
 }
 -(void)didFinishBannerViewActionNotification:(NSNotification</em>)notification
 {
-NSLog(@&ldquo;didFinishBannerViewActionNotification&rdquo;);
+    NSLog(@&ldquo;didFinishBannerViewActionNotification&rdquo;);
 }
 </code></pre></p>
 
@@ -235,9 +236,8 @@ NSLog(@&ldquo;didFinishBannerViewActionNotification&rdquo;);
    [self addChildViewController:<em>contentController];
    [contentView addSubview:</em>contentController.view];
    [<em>contentController didMoveToParentViewController:self];
-   [contentView addSubview:</em>bannerView];</p>
-
-<p>   self.view=contentView;
+   [contentView addSubview:</em>bannerView];
+   self.view=contentView;
 }</code></pre>
 2) Edit viewDidLayoutSubviews method and replace
 <code><pre>
