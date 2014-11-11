@@ -111,7 +111,7 @@
 
 <p>Beacon设备发送信号成为一个Beacon基站。然后另一个设备比如iPhone可以用一款App来监听附近某个UUID的Beacon基站，就算程序被关闭后，如果iPhone在附近发现此UUID的Beacon基站，App就能被唤醒，并且在iPhone锁屏界面的右下角会出现App的小图标。</p>
 
-<p>一般情况下如果一个商场在自己商场里面铺设很多Beacon设备。所有Beacon的UUID都是一样的。同一楼层Beacon基站的major一样，同一商店Beacon的minor值一样。</p>
+<p>一般情况下如果一个商场在自己商场里面铺设很多的Beacon基站。所有Beacon的UUID应该是一样的。同一楼层Beacon基站的major可以一样，同一商店Beacon的minor值一样。</p>
 
 <h2>Beacon在IOS设备上的实现</h2>
 
@@ -158,7 +158,7 @@ NSDictionary *beaconPeripheralData = [region peripheralDataWithMeasuredPower:nil
 </code></pre>
 
 
-<h4>监控附近的Beacon设备</h4>
+<h4>监控附近的Beacon基站</h4>
 
 <pre><code>
 self.locationManager = [[CLLocationManager alloc] init];
@@ -175,9 +175,12 @@ self.beaconRegion.notifyEntryStateOnDisplay = YES;
 
 //停止接收
 [self.locationManager stopMonitoringForRegion:self.beaconRegion];
+</code></pre>
 
-//需要实现CoreLocation里的CLLocationManagerDelegate的代理方法
 
+<h6>需要实现CoreLocation里的CLLocationManagerDelegate的代理方法</h6>
+
+<pre><code>
 //程序会不断调用此方法，beacons包含所有发现的Beacon基站
 - (void)locationManager:(CLLocationManager *)manager
         didRangeBeacons:(NSArray *)beacons
