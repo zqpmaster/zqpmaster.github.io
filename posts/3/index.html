@@ -9,7 +9,7 @@
   <meta name="author" content="一切从简">
 
   
-  <meta name="description" content="在用Xcode开发软件的时候难免会碰到项目更名的时候，重新更名目标名还是比较方便的，如何正确的更改「xcodeproj」的项目名还有对应的目录名字呢？ 首先要做的是备份一下整个工程文件，防止一旦更名失败还有办法补救，不然一切都毁了。 更名很简单，只要选中Project，按回车，就可以重命名了， &hellip;">
+  <meta name="description" content="Block is powerful in Objective-C. But there is a very stupid problem called cyclic retention pitfall, that a block locked an object so that the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -52,6 +52,169 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/04/block/">Block, weakSelf and strongSelf</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-04T15:07:23+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>3:07 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Block is powerful in Objective-C. But there is a very stupid problem called cyclic retention pitfall, that a block locked an object so that the object will never be release.</p>
+
+<p>For example, in the function:</p>
+
+<pre><code>
+NSBlockOperation *op = [[[NSBlockOperation alloc] init] autorelease];
+[ op addExecutionBlock:^ {
+    [self doSomething];
+    [self doMoreThing];
+} ];
+[someOperationQueue addOperation:op];
+</code></pre>
+
+
+<p>When the block is created, the compiler will capture all objects that used inside the block and add reference count by 1. In this case, self will be locked and so the object will not be released until the block is finished. Note that cyclic retention pitfall is not only happened in self object, but in 99% case, it happens in self object.</p>
+
+<h2>Weakify</h2>
+
+<p>To solve the problem, we can simply create a weak reference of the self, and use the weak object instead of the original object inside block. When the weak object is used, the block will not increase the reference count, so self will not be locked. We call to weakify the self.</p>
+
+<pre><code>
+__weak __typeof__(self) weakSelf = self;
+NSBlockOperation *op = [[[NSBlockOperation alloc] init] autorelease];
+[ op addExecutionBlock:^ {
+    [weakSelf doSomething];
+    [weakSelf doMoreThing];
+} ];
+[someOperationQueue addOperation:op];
+</code></pre>
+
+
+<h2>When should use weakify</h2>
+
+<p>The block will release all objects used inside the blocks scope after the block is finished. If the block is execution type block that will be released after execution is finished, e.g.:</p>
+
+<ul>
+<li>GCD dispatch block</li>
+<li>Most UIKit block</li>
+</ul>
+
+
+<p>It should be safe not to use weakify technique because the block&rsquo;s lifetime is determined. However, if you are using block that will store block as variable, e.g.:</p>
+
+<ul>
+<li>Blocks in NSOperation, AFHTTPRequestOperation</li>
+<li>Event handler block like something in BlocksKit</li>
+</ul>
+
+
+<p>Because the lifetime of the block is uncertained, it is suggested to use weakify to prevent cyclic retention pitfall.</p>
+
+<p>Use AFHTTPRequestOperation as an example, if you simple call:</p>
+
+<pre><code>
+AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+op.responseSerializer = [AFJSONResponseSerializer serializer];
+[op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self doSomethingUpdateControls];
+    NSLog(@"JSON: %@", responseObject);
+} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSLog(@"Error: %@", error);
+}];
+[op start];
+</code></pre>
+
+
+<p>self will be locked until the network operation finished. It may be okay in most case because it will at most cost several seconds to complete the operation.</p>
+
+<p>But, if you are handling operations using operation queue:</p>
+
+<pre><code>
+AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+op.responseSerializer = [AFJSONResponseSerializer serializer];
+[op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self doSomethingUpdateControls];
+    NSLog(@"JSON: %@", responseObject);
+} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSLog(@"Error: %@", error);
+}];
+[[NSOperationQueue mainQueue] addOperation:op];
+</code></pre>
+
+
+<p>There will be chance that the operation will be paused in the queue. When the operation object is not released, it will lock the block scope and so theself object. In this case, if the self object is a viewController and if you don&rsquo;t want to use weakify technique, you must make sure that you have to cancel all operations
+[[NSOperationQueue mainQueue] removeAllOperations] at some point like [viewDidDisappeared:(BOOL)animated].</p>
+
+<h2>Strongify</h2>
+
+<p>But there is another problem, because now the self is weakified. Now self will be free and weakSelf can be nil any time. In the above case, the block may able to run doSomething but failed to run doMoreThing because weakSelf may be nullified at that time.</p>
+
+<p>To solve this, we can strongify self before use:</p>
+
+<pre><code>
+__weak __typeof__(self) weakSelf = self;
+NSBlockOperation *op = [[[NSBlockOperation alloc] init] autorelease];
+[ op addExecutionBlock:^ {
+    __strong __typeof__(self) strongSelf = weakSelf;
+    [strongSelf doSomething];
+    [strongSelf doMoreThing];
+} ];
+[someOperationQueue addOperation:op];
+</code></pre>
+
+
+<p>So self will not be released inside the block call until the life cycle of the strongSelf ends.</p>
+
+<h2>When should use strongify</h2>
+
+<p>However, should we use strongSelf every time inside a block?</p>
+
+<p>Yes, it’s safe to use it every time.</p>
+
+<p>No, sometimes you can simply use the weakSelf when:</p>
+
+<ul>
+<li>You don&rsquo;t care that self will be nullified in the middle of the block. e.g. setting control’s value. Note that although weakSelf may be released in the middle, it will be nullified and will not crash the code.</li>
+<li>You are sure that the self will not be released in the middle. e.g. All block are running in main thread.</li>
+</ul>
+
+
+<h2>Syntax Sugar</h2>
+
+<p>We can use a third party library libextobjc so that you can some more readable code like this:</p>
+
+<pre><code>
+@weakify(self);
+NSBlockOperation *op = [[[NSBlockOperation alloc] init] autorelease];
+[ op addExecutionBlock:^ {
+    @strongify(self);   
+    [self doSomething];
+    [self doMoreThing];
+} ];
+[someOperationQueue addOperation:op];
+</code></pre>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -117,6 +280,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/11/ibeacon/">iBeacon</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/10/25/ru-he-shi-yong-xibshe-zhi-shi-tu-de-geng-duo-shu-xing/">如何使用XIB设置视图的更多属性</a>
       </li>
     
@@ -134,10 +301,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/06/guo-qing-za-tan/">国庆杂谈</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/04/block/">Block, weakSelf and strongSelf</a>
       </li>
     
   </ul>
