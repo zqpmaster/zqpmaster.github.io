@@ -4,7 +4,7 @@
   <title><![CDATA[一切从简]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2014-11-11T23:36:24+08:00</updated>
+  <updated>2014-11-11T23:40:18+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[iBeacon]]></title>
+    <title type="html"><![CDATA[探寻Beacon技术]]></title>
     <link href="http://blog.sheliw.com/blog/2014/11/11/ibeacon/"/>
     <updated>2014-11-11T22:26:32+08:00</updated>
     <id>http://blog.sheliw.com/blog/2014/11/11/ibeacon</id>
@@ -65,10 +65,12 @@
 
 <pre><code>
 self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:nil];
+
 time_t t;
 srand((unsigned) time(&t));
 CLBeaconRegion *region = [[CLBeaconRegion alloc] initWithProximityUUID:self.beaconRegion.proximityUUID major:rand() minor:rand() identifier:self.beaconRegion.identifier];
- NSDictionary *beaconPeripheralData = [region peripheralDataWithMeasuredPower:nil];
+
+NSDictionary *beaconPeripheralData = [region peripheralDataWithMeasuredPower:nil];
 [self.peripheralManager startAdvertising:beaconPeripheralData];
 </code></pre>
 
@@ -107,6 +109,7 @@ self.locationManager = [[CLLocationManager alloc] init];
 self.locationManager.delegate = self;
 
 //kUUID可以设置为一个定值，就是监控附近为此UUID的beacon设备。
+
 NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:kUUID];
 self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID identifier:kIdentifier];
 self.beaconRegion.notifyEntryStateOnDisplay = YES;
@@ -116,12 +119,9 @@ self.beaconRegion.notifyEntryStateOnDisplay = YES;
 
 //停止接收
 [self.locationManager stopMonitoringForRegion:self.beaconRegion];
-</code></pre>
 
+//需要实现CoreLocation里的CLLocationManagerDelegate的代理方法
 
-<h6>需要实现CoreLocation里的CLLocationManagerDelegate的代理方法</h6>
-
-<pre><code>
 //程序会不断调用此方法，beacons包含所有发现的Beacon基站
 - (void)locationManager:(CLLocationManager *)manager
         didRangeBeacons:(NSArray *)beacons

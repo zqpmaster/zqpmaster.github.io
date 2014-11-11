@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>iBeacon - 一切从简</title>
+  <title>探寻Beacon技术 - 一切从简</title>
   <meta name="author" content="一切从简">
 
   
@@ -55,7 +55,7 @@
   
   <header>
     
-      <h1 class="entry-title">iBeacon</h1>
+      <h1 class="entry-title">探寻Beacon技术</h1>
     
     
       <p class="meta">
@@ -118,10 +118,12 @@
 
 <pre><code>
 self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:nil];
+
 time_t t;
 srand((unsigned) time(&t));
 CLBeaconRegion *region = [[CLBeaconRegion alloc] initWithProximityUUID:self.beaconRegion.proximityUUID major:rand() minor:rand() identifier:self.beaconRegion.identifier];
- NSDictionary *beaconPeripheralData = [region peripheralDataWithMeasuredPower:nil];
+
+NSDictionary *beaconPeripheralData = [region peripheralDataWithMeasuredPower:nil];
 [self.peripheralManager startAdvertising:beaconPeripheralData];
 </code></pre>
 
@@ -160,6 +162,7 @@ self.locationManager = [[CLLocationManager alloc] init];
 self.locationManager.delegate = self;
 
 //kUUID可以设置为一个定值，就是监控附近为此UUID的beacon设备。
+
 NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:kUUID];
 self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID identifier:kIdentifier];
 self.beaconRegion.notifyEntryStateOnDisplay = YES;
@@ -169,12 +172,9 @@ self.beaconRegion.notifyEntryStateOnDisplay = YES;
 
 //停止接收
 [self.locationManager stopMonitoringForRegion:self.beaconRegion];
-</code></pre>
 
+//需要实现CoreLocation里的CLLocationManagerDelegate的代理方法
 
-<h6>需要实现CoreLocation里的CLLocationManagerDelegate的代理方法</h6>
-
-<pre><code>
 //程序会不断调用此方法，beacons包含所有发现的Beacon基站
 - (void)locationManager:(CLLocationManager *)manager
         didRangeBeacons:(NSArray *)beacons
@@ -271,7 +271,7 @@ self.beaconRegion.notifyEntryStateOnDisplay = YES;
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/11/11/ibeacon/">iBeacon</a>
+        <a href="/blog/2014/11/11/ibeacon/">探寻Beacon技术</a>
       </li>
     
       <li class="post">
