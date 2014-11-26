@@ -4,7 +4,7 @@
   <title><![CDATA[一切从简]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2014-11-21T09:59:21+08:00</updated>
+  <updated>2014-11-26T21:09:36+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -12,6 +12,28 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[valueForKey: Vs objectForKey:]]></title>
+    <link href="http://blog.sheliw.com/blog/2014/11/26/valueforkey-vs-objectforkey/"/>
+    <updated>2014-11-26T19:51:01+08:00</updated>
+    <id>http://blog.sheliw.com/blog/2014/11/26/valueforkey-vs-objectforkey</id>
+    <content type="html"><![CDATA[<p>访问NSDictionary时既可以使用字典内的方法<code>objectForKey:</code>，也可以使用KVC的方法<code>valueForKey:</code>。但是使用这两种方法有什么区别呢？</p>
+
+<ul>
+<li><p><code>+ (id)valueForKey:(NSString *)key</code> 的key必须是NSString型，<code>- (id)objectForKey:(id)aKey</code> 的key可以是id类型也就是任何NSObject的子类，不过这个key必须遵循NSCopying协议。</p></li>
+<li><p><code>+ (id)valueForKey:(NSString *)key</code>作为一个KVC方法，可以适用于任何类，可以在运行时改变任何类的一个属性。其他语言很少能做到这一点。<code>- (id)objectForKey:(id)aKey</code>只用于NSDictionary或者其子类。</p></li>
+<li><p><code>+ (id)valueForKey:(NSString *)key</code>用于NSDictionary时，如果key不包含@,将会调用<code>objectForKey:</code>。如果key包含@，将会调用<code>[super valueForKey:]</code>，这就会导致如果key不存在时将会执行执行此方法 <code>valueForUndefinedKey:</code>并抛出异常。</p></li>
+</ul>
+
+
+<blockquote><p><code>valueForKey:</code> Discussion:</p>
+
+<p>If key does not start with “@”, invokes <code>objectForKey:</code>. If key does start with “@”, strips the “@” and invokes <code>[super valueForKey:]</code> with the rest of the key.</p></blockquote>
+
+<p>总之，从速度，安全性方面考虑我们应该在能用<code>objectForKey:</code>的地方就不要用<code>valueForKey:</code>。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[探寻Beacon技术]]></title>
@@ -22,7 +44,7 @@
 
 <h2>什么是Beacon?</h2>
 
-<p>Beacon技术最简单的理解可以是一个小型的信息基站，而多个Beacon能构成信息服务网络。Beacon的工作方式是Transmitter-Receiver，即基站-接收机模式的。基站？这个时候不要想到移动、联通的那些大铁塔。这个基站可以是一个运行着Bluetooth 4.0 LE的设备，也可以是经过配置的iPhone、iPad。iPhone4S和之后的iPhone、iPad3或之后的iPad，包括iPad mini都可以配置成Beacon基站。Beacon就是在蓝牙技术上加以Beacon的协议。苹果在2013年WWDC大会上推出iBeacon技术。而其他的厂商如高通、PayPal同样在推基于低功耗蓝牙的Beacon硬件。</p>
+<p>Beacon技术最简单的理解可以是一个小型的信息基站，而多个Beacon能构成信息服务网络。Beacon的工作方式是Transmitter-Receiver，即基站-接收机模式的。基站？这个时候不要想到移动、联通的那些大铁塔。这个基站可以是一个运行着Bluetooth 4.0 LE的设备，也可以是经过配置的iPhone、iPad。iPhone4S和之后的iPhone、iPad3或之后的iPad，包括iPad mini都可以配置成Beacon基站。</p>
 
 <h2>Beacon技术的优势</h2>
 
