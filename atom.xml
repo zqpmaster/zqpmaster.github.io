@@ -4,7 +4,7 @@
   <title><![CDATA[一切从简]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2014-11-26T21:09:36+08:00</updated>
+  <updated>2014-11-26T21:16:08+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[valueForKey: Vs objectForKey:]]></title>
+    <title type="html"><![CDATA[valueForKey vs objectForKey]]></title>
     <link href="http://blog.sheliw.com/blog/2014/11/26/valueforkey-vs-objectforkey/"/>
     <updated>2014-11-26T19:51:01+08:00</updated>
     <id>http://blog.sheliw.com/blog/2014/11/26/valueforkey-vs-objectforkey</id>
@@ -23,9 +23,11 @@
 <ul>
 <li><p><code>+ (id)valueForKey:(NSString *)key</code> 的key必须是NSString型，<code>- (id)objectForKey:(id)aKey</code> 的key可以是id类型也就是任何NSObject的子类，不过这个key必须遵循NSCopying协议。</p></li>
 <li><p><code>+ (id)valueForKey:(NSString *)key</code>作为一个KVC方法，可以适用于任何类，可以在运行时改变任何类的一个属性。其他语言很少能做到这一点。<code>- (id)objectForKey:(id)aKey</code>只用于NSDictionary或者其子类。</p></li>
-<li><p><code>+ (id)valueForKey:(NSString *)key</code>用于NSDictionary时，如果key不包含@,将会调用<code>objectForKey:</code>。如果key包含@，将会调用<code>[super valueForKey:]</code>，这就会导致如果key不存在时将会执行执行此方法 <code>valueForUndefinedKey:</code>并抛出异常。</p></li>
+<li><p><code>+ (id)valueForKey:(NSString *)key</code>用于NSDictionary时，如果key不包含@,将会调用<code>objectForKey:</code>。如果key包含@，将会调用<code>[super valueForKey:]</code>，这就会导致如果key不存在时将会执行此方法 <code>valueForUndefinedKey:</code>并抛出异常。<code>- (id)objectForKey:(id)aKey</code>在访问NSDictionary里不存在的key时。得到的object为nil。但是不会抛出异常。</p></li>
 </ul>
 
+
+<p>如文档所说：</p>
 
 <blockquote><p><code>valueForKey:</code> Discussion:</p>
 

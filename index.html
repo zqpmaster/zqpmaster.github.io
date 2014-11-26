@@ -58,7 +58,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/11/26/valueforkey-vs-objectforkey/">valueForKey: Vs objectForKey:</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/11/26/valueforkey-vs-objectforkey/">valueForKey vs objectForKey</a></h1>
     
     
       <p class="meta">
@@ -79,9 +79,11 @@
 <ul>
 <li><p><code>+ (id)valueForKey:(NSString *)key</code> 的key必须是NSString型，<code>- (id)objectForKey:(id)aKey</code> 的key可以是id类型也就是任何NSObject的子类，不过这个key必须遵循NSCopying协议。</p></li>
 <li><p><code>+ (id)valueForKey:(NSString *)key</code>作为一个KVC方法，可以适用于任何类，可以在运行时改变任何类的一个属性。其他语言很少能做到这一点。<code>- (id)objectForKey:(id)aKey</code>只用于NSDictionary或者其子类。</p></li>
-<li><p><code>+ (id)valueForKey:(NSString *)key</code>用于NSDictionary时，如果key不包含@,将会调用<code>objectForKey:</code>。如果key包含@，将会调用<code>[super valueForKey:]</code>，这就会导致如果key不存在时将会执行执行此方法 <code>valueForUndefinedKey:</code>并抛出异常。</p></li>
+<li><p><code>+ (id)valueForKey:(NSString *)key</code>用于NSDictionary时，如果key不包含@,将会调用<code>objectForKey:</code>。如果key包含@，将会调用<code>[super valueForKey:]</code>，这就会导致如果key不存在时将会执行此方法 <code>valueForUndefinedKey:</code>并抛出异常。<code>- (id)objectForKey:(id)aKey</code>在访问NSDictionary里不存在的key时。得到的object为nil。但是不会抛出异常。</p></li>
 </ul>
 
+
+<p>如文档所说：</p>
 
 <blockquote><p><code>valueForKey:</code> Discussion:</p>
 
@@ -330,7 +332,7 @@ self.beaconRegion.notifyEntryStateOnDisplay = YES;
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/11/26/valueforkey-vs-objectforkey/">valueForKey: Vs objectForKey:</a>
+        <a href="/blog/2014/11/26/valueforkey-vs-objectforkey/">valueForKey vs objectForKey</a>
       </li>
     
       <li class="post">
