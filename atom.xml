@@ -4,7 +4,7 @@
   <title><![CDATA[一切从简]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2014-11-26T21:18:26+08:00</updated>
+  <updated>2014-11-26T21:29:58+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -192,7 +192,13 @@ self.beaconRegion.notifyEntryStateOnDisplay = YES;
 </code></pre>
 
 
+<h3>参考</h3>
 
+<p><a href="http://www.cocoachina.com/industry/20140730/9275.html">iBeacon 的第一篇（基于Swift实现）</a></p>
+
+<p>Github开源项目<a href="https://github.com/nicktoumpelis/HiBeacons">HiBeacons</a></p>
+
+<p>苹果官方iBeacon例子<a href="https://developer.apple.com/library/ios/samplecode/airlocate/introduction/intro.html">AirLocate: Using CoreLocation to monitor, range, and configure your device as an iBeacon</a></p>
 ]]></content>
   </entry>
   
