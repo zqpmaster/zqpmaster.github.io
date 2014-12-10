@@ -9,8 +9,8 @@
   <meta name="author" content="一切从简">
 
   
-  <meta name="description" content="正方教务系统IOS客户端DEMO 用到的几个工具 - chrome的开发者工具 查看每次HTTP请求命令与参数等。
-- AFNetworking ios网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI好像好久没有更新 &hellip;">
+  <meta name="description" content="正方教务系统IOS客户端DEMO 用到的几个工具 chrome的开发者工具 查看每次HTTP请求命令与参数等。
+AFNetworking ios网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI好像好久没有更新。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,10 +90,12 @@
 
 <p>用到的几个工具</p>
 
-<pre><code>- chrome的开发者工具   查看每次HTTP请求命令与参数等。
-- AFNetworking    ios网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI好像好久没有更新。
-- TFhepple    Html分析类库。
-</code></pre>
+<ol>
+<li>chrome的开发者工具   查看每次HTTP请求命令与参数等。</li>
+<li>AFNetworking    ios网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI好像好久没有更新。</li>
+<li>TFhepple    Html分析类库。</li>
+</ol>
+
 
 <p>正方教务系统因为没有对应的JSON或者XML数据接口，所以只能模拟网页的所有行为，获取html 分析html。
 正方教务系统用的编码是GB2312 框架获取下来的NSString虽然已经自动解码，但是很不稳定，有时候会得到空字符串，但是获取下来的DATA就没有这个问题，所以就要手动解码将DATA转为NSString。</p>
