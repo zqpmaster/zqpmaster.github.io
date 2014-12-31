@@ -4,7 +4,7 @@
   <title><![CDATA[Max Blog]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2014-12-25T18:32:19+08:00</updated>
+  <updated>2014-12-31T15:19:29+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -228,9 +228,7 @@ self.beaconRegion.notifyEntryStateOnDisplay = YES;
     <link href="http://blog.sheliw.com/blog/2014/10/25/zheng-fang-jiao-wu-guan-li-xi-tong-ioske-hu-duan/"/>
     <updated>2014-10-25T13:16:47+08:00</updated>
     <id>http://blog.sheliw.com/blog/2014/10/25/zheng-fang-jiao-wu-guan-li-xi-tong-ioske-hu-duan</id>
-    <content type="html"><![CDATA[<h2>正方教务系统IOS客户端DEMO</h2>
-
-<p>用到的几个工具</p>
+    <content type="html"><![CDATA[<p>用到的几个工具</p>
 
 <ol>
 <li>chrome的开发者工具   查看每次HTTP请求命令与参数等。</li>
@@ -322,6 +320,8 @@ NSDictionary *parameters = @{@"__VIEWSTATE":self.viewState,@"txtUserName"self.xu
 
 
 <p></p>
+
+<p>demo地址：<a href="https://github.com/zqpmaster/FangZhengJiaoWU">正方教务系统iOS客户端Demo</a></p>
 ]]></content>
   </entry>
   
