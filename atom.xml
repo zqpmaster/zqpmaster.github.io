@@ -4,7 +4,7 @@
   <title><![CDATA[Max Blog]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2015-01-16T21:05:39+08:00</updated>
+  <updated>2015-02-03T19:48:29+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -12,17 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[2015]]></title>
-    <link href="http://blog.sheliw.com/blog/2015/01/01/2015/"/>
-    <updated>2015-01-01T10:39:58+08:00</updated>
-    <id>http://blog.sheliw.com/blog/2015/01/01/2015</id>
-    <content type="html"><![CDATA[<p>2015年写好自己的代码，改善自己的生活和精神状态。
-做好这些角色：
-同事的同事，公司的职员，父母的儿子，长辈的晚辈，晚辈的长辈，朋友的哥们，自己的对手。</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[valueForKey: Vs objectForKey:]]></title>
@@ -49,11 +38,16 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[探寻Beacon技术]]></title>
+    <title type="html"><![CDATA[Ibeacon]]></title>
     <link href="http://blog.sheliw.com/blog/2014/11/11/ibeacon/"/>
-    <updated>2014-11-11T22:26:32+08:00</updated>
+    <updated>2014-11-11T00:00:00+08:00</updated>
     <id>http://blog.sheliw.com/blog/2014/11/11/ibeacon</id>
-    <content type="html"><![CDATA[<p>最近有幸研究一番Beacon，并且也和生产Beacon设备的厂家交流了一些关于Beacon的技术。苹果没有使用NFC，而是选择了Beacon自有一定的道理。</p>
+    <content type="html"><![CDATA[<hr />
+
+<p>layout: post
+title: &ldquo;探寻Beacon技术&rdquo;
+date: 2014-11-11 22:26:32 +0800
+comments: true</p>
 
 <h2>什么是Beacon?</h2>
 
