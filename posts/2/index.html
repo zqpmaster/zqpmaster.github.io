@@ -9,9 +9,7 @@
   <meta name="author" content="一切从简">
 
   
-  <meta name="description" content="用到的几个工具 chrome的开发者工具 查看每次HTTP请求命令与参数等。
-AFNetworking ios网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI好像好久没有更新。
-TFhepple Html分析类库。 &hellip;">
+  <meta name="description" content="最近遇到了将ScrollView放在XIB的视图里，用代码设置contentSize后，scrollView不能滑动的问题。费了很大劲之后找到正确的办法，并且发现XIB的一个极为实用的技巧。如果想用XIB设置视图更多的属性。可以使用Identity inspector下的User Defined &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -58,6 +56,54 @@ TFhepple Html分析类库。 &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/25/ru-he-shi-yong-xibshe-zhi-shi-tu-de-geng-duo-shu-xing/">如何使用XIB设置视图的更多属性</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-25T13:37:20+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近遇到了将ScrollView放在XIB的视图里，用代码设置contentSize后，scrollView不能滑动的问题。费了很大劲之后找到正确的办法，并且发现XIB的一个极为实用的技巧。如果想用XIB设置视图更多的属性。可以使用Identity inspector下的User Defined Runtime Attribute.添加一些KeyPath.</p>
+
+<p>1.在XIB里选中视图。</p>
+
+<p>2.切换到Identity inspector, 新建一个新的User Defined Runtime Attribute (点击  + 按钮)。</p>
+
+<p>3.双击Key Path,改为要设置的属性。</p>
+
+<p>4.双击Type，改为要设置的属性的类型.</p>
+
+<p>5.更改Value为要设置的值。</p>
+
+<p>Swift语言貌似可以使用@IBInspectable和@IBDesignable 直接在Storyboard和Xib里添加设置选项</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -358,63 +404,6 @@ P.S. Are you sure you want to use iAd? Besides low fill rate, there are some lim
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/11/nsoperationqueue-vs-gcd/">NSOperationQueue与GCD的区别</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-11T10:49:58+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>首先，我们要明确NSOperationQueue与GCD之间的关系</p>
-
-<p>NSOpertaionQueue用GCD构建封装的，是GCD的高级抽象。
-其次，我们要区别两者的不同</p>
-
-<p>GCD仅仅支持FIFO队列，而NSOperationQueue中的队列可以被重新设置优先级，从而实现不同操作的执行顺序调整。
-GCD不支持异步操作之间的依赖关系设置。如果某个操作的依赖另一个操作的数据（生产者-消费者模型是其中之一），使用NSOperationQueue能够按照正确的顺序执行操作。GCD则没有内建的依赖关系支持。</p>
-
-<p>NSOperationQueue支持KVO，意味着我们可以观察任务的执行状态。</p>
-
-<p>了解以上不同，我们可以从以下角度来定义原则</p>
-
-<ol>
-<li><p>性能
-GCD更接近底层，而NSOperationQueue则更高级抽象，所以GCD在追求性能的底层操作来说，是速度最快的。这取决于使用Instruments进行代码性能分析，如有必要的话</p></li>
-<li><p>从异步操作之间的事务性，顺序行，依赖关系，任务并发数量，任务优先级。GCD需要自己写更多的代码来实现，而NSOperationQueue已经内建了这些支持</p></li>
-<li><p>如果异步操作的过程需要更多的被交互和UI呈现出来，NSOperationQueue会是一个更好的选择。底层代码中，任务之间不太互相依赖，而需要更高的并发能力，GCD则更有优势</p></li>
-</ol>
-
-
-<p>最后的一句话
-别忘了高德纳的教诲：“在大概97%的时间里，我们应该忘记微小的性能提升。过早优化是万恶之源。”只有Instruments显示有真正的性能提升时才有必要用低级的GCD。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="3">&larr; Older</a>
@@ -431,6 +420,10 @@ GCD更接近底层，而NSOperationQueue则更高级抽象，所以GCD在追求�
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/02/16/keychain/">Keychain</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/11/26/valueforkey-vs-objectforkey/">valueForKey: Vs objectForKey:</a>
@@ -450,10 +443,6 @@ GCD更接近底层，而NSOperationQueue则更高级抽象，所以GCD在追求�
     
       <li class="post">
         <a href="/blog/2014/10/25/ru-he-zai-cocos2d-xyou-xi-li-ji-cheng-iadyan-gao/">如何在Cocos2d-x游戏里集成iAd广告</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/11/nsoperationqueue-vs-gcd/">NSOperationQueue与GCD的区别</a>
       </li>
     
   </ul>

@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Max Blog</title>
+  <title>Keychain - Max Blog</title>
   <meta name="author" content="一切从简">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.sheliw.com">
+  <link rel="canonical" href="http://blog.sheliw.com/blog/2015/02/16/keychain">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Max Blog" type="application/atom+xml">
@@ -54,15 +54,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/02/16/keychain/">Keychain</a></h1>
+      <h1 class="entry-title">Keychain</h1>
     
     
       <p class="meta">
@@ -85,7 +82,7 @@
   </header>
 
 
-  <div class="entry-content"><h2>什么是Keychain?根据苹果的介绍，iOS设备中的Keychain是一个安全的存储容器，可以用来为不同应用保存敏感信息比如用户名，密码，网络密码，认证令牌。苹果自己用keychain来保存Wi-Fi网络密码，VPN凭证等等。它是一个在所有app之外的sqlite数据库。如果我们手动把自己的私密信息加密，然后通过写文件保存在本地，再从本地取出不仅麻烦，而且私密信息也会随着App的删除而丢失。iOS的Keychain能完美的解决这些问题。并且从iOS 3.0开始，Keychain还支持跨程序分享。这样就极大的方便了用户。省去了很多要记忆密码的烦恼。##Structure of a KeychainKeychain内部可以保存很多的信息。每条信息作为一个单独的keychain item，keychain item一般为一个字典，每条keychain item包含一条data和很多attributes。举个例子，一个用户账户就是一条item，用户名可以作为一个attribute , 密码就是data。 keychain虽然是可以保存15000条item,每条50个attributes，但是苹果工程师建议最好别放那么多，存几千条密码，几千字节没什么问题。    如果把keychain item的类型指定为需要保护的类型比如password或者private key，item的data会被加密并且保护起来，如果把类型指定为不需要保护的类型，比如certificates，item的data就不会被加密。item可以指定为以下几种类型：</h2>
+<div class="entry-content"><h2>什么是Keychain?根据苹果的介绍，iOS设备中的Keychain是一个安全的存储容器，可以用来为不同应用保存敏感信息比如用户名，密码，网络密码，认证令牌。苹果自己用keychain来保存Wi-Fi网络密码，VPN凭证等等。它是一个在所有app之外的sqlite数据库。如果我们手动把自己的私密信息加密，然后通过写文件保存在本地，再从本地取出不仅麻烦，而且私密信息也会随着App的删除而丢失。iOS的Keychain能完美的解决这些问题。并且从iOS 3.0开始，Keychain还支持跨程序分享。这样就极大的方便了用户。省去了很多要记忆密码的烦恼。##Structure of a KeychainKeychain内部可以保存很多的信息。每条信息作为一个单独的keychain item，keychain item一般为一个字典，每条keychain item包含一条data和很多attributes。举个例子，一个用户账户就是一条item，用户名可以作为一个attribute , 密码就是data。 keychain虽然是可以保存15000条item,每条50个attributes，但是苹果工程师建议最好别放那么多，存几千条密码，几千字节没什么问题。    如果把keychain item的类型指定为需要保护的类型比如password或者private key，item的data会被加密并且保护起来，如果把类型指定为不需要保护的类型，比如certificates，item的data就不会被加密。item可以指定为以下几种类型：</h2>
 
 <ul>
 <li>extern CFTypeRef kSecClassGenericPassword+ extern CFTypeRef kSecClassInternetPassword+ extern CFTypeRef kSecClassCertificate+ extern CFTypeRef kSecClassKey+ extern CFTypeRef kSecClassIdentity+     <strong>OSX_AVAILABLE_STARTING(</strong>MAC_10_7, __IPHONE_2_0);##Keychain的用法首先导入Security.framework 。Keychain的API提供以下几个函数来操作Keychain•   SecItemAdd 添加一个keychain item• SecItemUpdate 修改一个keychain item•  SecItemCopyMatching 搜索一个keychain item•    SecItemDelete 删除一个keychain item也可以参考以下这段简单的代码来了解下Keychain API的用法。<pre><code>- (NSMutableDictionary <em>)newSearchDictionary:(NSString </em>)identifier {    NSMutableDictionary <em>searchDictionary = [[NSMutableDictionary alloc] init];//指定item的类型为GenericPassword   [searchDictionary setObject:(id)kSecClassGenericPassword forKey:(id)kSecClass];//类型为GenericPassword的信息必须提供以下两条属性作为unique identifier   [searchDictionary setObject:encodedIdentifier forKey:(id)kSecAttrAccount]；   [searchDictionary setObject:encodedIdentifier forKey:(id)kSecAttrService]；    return searchDictionary;}- (NSData </em>)searchKeychainCopyMatching:(NSString <em>)identifier {    NSMutableDictionary </em>searchDictionary = [self newSearchDictionary:identifier];//在搜索keychain item的时候必须提供下面的两条用于搜索的属性//只返回搜索到的第一条item   [searchDictionary setObject:(id)kSecMatchLimitOne forKey:(id)kSecMatchLimit];//返回item的kSecValueData   [searchDictionary setObject:(id)kCFBooleanTrue forKey:(id)kSecReturnData];    NSData <em>result = nil;    OSStatus status = SecItemCopyMatching((CFDictionaryRef)searchDictionary,                                          (CFTypeRef </em>)&amp;result);    [searchDictionary release];    return result;}- (BOOL)createKeychainValue:(NSString <em>)password forIdentifier:(NSString </em>)identifier {    NSMutableDictionary <em>dictionary = [self newSearchDictionary:identifier];    NSData </em>passwordData = [password dataUsingEncoding:NSUTF8StringEncoding];    [dictionary setObject:passwordData forKey:(id)kSecValueData];        OSStatus status = SecItemAdd((CFDictionaryRef)dictionary, NULL);    [dictionary release];   if (status == errSecSuccess) {        return YES;    }    return NO;}- (BOOL)updateKeychainValue:(NSString <em>)password forIdentifier:(NSString </em>)identifier {    NSMutableDictionary <em>searchDictionary = [self newSearchDictionary:identifier];    NSMutableDictionary </em>updateDictionary = [[NSMutableDictionary alloc] init];    NSData <em>passwordData = [password dataUsingEncoding:NSUTF8StringEncoding];    [updateDictionary setObject:passwordData forKey:(id)kSecValueData];        OSStatus status = SecItemUpdate((CFDictionaryRef)searchDictionary,                                    (CFDictionaryRef)updateDictionary);    [searchDictionary release];    [updateDictionary release];        if (status == errSecSuccess) {        return YES;    }    return NO;}- (void)deleteKeychainValue:(NSString </em>)identifier {   NSMutableDictionary *searchDictionary = [self newSearchDictionary:identifier];    SecItemDelete((CFDictionaryRef)searchDictionary);    [searchDictionary release];}</code></pre>
@@ -93,73 +90,16 @@ Keychain API的用法稍微有点复杂。不过Apple自己也提供了一个封
 </ul>
 
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/26/valueforkey-vs-objectforkey/">valueForKey: Vs objectForKey:</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">一切从简</span></span>
 
-<time datetime="2014-11-26T19:51:01+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>访问NSDictionary时既可以使用字典内的方法<code>objectForKey:</code>，也可以使用KVC的方法<code>valueForKey:</code>。但是使用这两种方法有什么区别呢？</p>
-
-<ul>
-<li><p><code>+ (id)valueForKey:(NSString *)key</code> 的key必须是NSString型，<code>- (id)objectForKey:(id)aKey</code> 的key可以是id类型也就是任何NSObject的子类，不过这个key必须遵循NSCopying协议。</p></li>
-<li><p><code>+ (id)valueForKey:(NSString *)key</code>作为一个KVC方法，可以适用于任何类，可以在运行时改变任何类的一个属性。其他语言很少能做到这一点。<code>- (id)objectForKey:(id)aKey</code>只用于NSDictionary或者其子类。</p></li>
-<li><p><code>+ (id)valueForKey:(NSString *)key</code>用于NSDictionary时，如果key不包含@,将会调用<code>objectForKey:</code>。如果key包含@，将会调用<code>[super valueForKey:]</code>，这就会导致如果key不存在时将会执行此方法 <code>valueForUndefinedKey:</code>并抛出异常。<code>- (id)objectForKey:(id)aKey</code>在访问NSDictionary里不存在的key时。得到的object为nil。但是不会抛出异常。</p></li>
-</ul>
-
-
-<p>如文档所说：</p>
-
-<blockquote><p><code>valueForKey:</code> Discussion:</p>
-
-<p>If key does not start with “@”, invokes <code>objectForKey:</code>. If key does start with “@”, strips the “@” and invokes <code>[super valueForKey:]</code> with the rest of the key.</p></blockquote>
-
-<p>总之，从速度，安全性方面考虑我们应该在能用<code>objectForKey:</code>的地方就不要用<code>valueForKey:</code>。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/11/ibeacon/">探寻Beacon技术</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -171,184 +111,37 @@ Keychain API的用法稍微有点复杂。不过Apple自己也提供了一个封
   
 
 
-<time datetime="2014-11-11T22:26:32+08:00" pubdate data-updated="true"></time>
-        
-      </p>
+<time datetime="2015-02-16T15:27:43+08:00" pubdate data-updated="true"></time>
+      
+
+
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><h2>什么是Beacon?</h2>
-
-<p>Beacon技术最简单的理解可以是一个小型的信息基站，而多个Beacon能构成信息服务网络。Beacon的工作方式是Transmitter-Receiver，即基站-接收机模式的。基站？这个时候不要想到移动、联通的那些大铁塔。这个基站可以是一个运行着Bluetooth 4.0 LE的设备，也可以是经过配置的iPhone、iPad。iPhone4S和之后的iPhone、iPad3或之后的iPad，包括iPad mini都可以配置成Beacon基站。</p>
-
-<h2>Beacon技术的优势</h2>
-
-<p>Beacon技术的优势其实就是低功耗蓝牙的优势。大部分的Beacon硬件连接范围达到200英尺，而且低功耗蓝牙不像WiFi那样需要网络连接，低功耗蓝牙只要有两个点就能运作起来。</p>
-
-<h2>Beacon的应用</h2>
-
-<ol>
-<li>零售
-通过Beacon向用户推送优惠信息，收集顾客在店内的消费数据。零售店主显然是第一波吃螃蟹的人。</li>
-<li>支付
-零售业同样是最先开始试水的一支，但这项的使用场景还会扩张。比如当用户进入或者离开一个场地时，自动发起一次支付（用于景点之类的购票）。</li>
-<li>交通
-机场、火车站、地铁换乘站针对乘客的信息推送。目前只是换乘、导航、天气信息，但未来可以发展成行程服务信息，比如当乘客到达后自动打车。</li>
-<li>家居
-同样是基于地理围栏的信息通知，比如告诉父母孩子回到家里了。</li>
-</ol>
-
-
-<h2>Beacon设备的技术原理</h2>
-
-<p>一个Beacon基站主要有三部分标识：</p>
-
-<ol>
-<li>UUID，形如：206A2476-D4DB-42F0-BF73-030236F2C756。用来标识某一个公司。比如，某个房地产公司的全部的基站都用同一个UUID。</li>
-<li>major，用来标识某一类的beacon。比如这个房地产公司的北京的房子都设定为1，上海的都设定为2。</li>
-<li>minor，用来标识某一个特定的beacon。比如某栋楼的某个基站。</li>
-</ol>
-
-
-<p>Beacon设备发送信号成为一个Beacon基站。然后另一个设备比如iPhone可以用一款App来监听附近某个UUID的Beacon基站，就算程序被关闭后，如果iPhone在附近发现此UUID的Beacon基站，App就能被唤醒，并且在iPhone锁屏界面的右下角会出现App的小图标。</p>
-
-<p>一般情况下如果一个商场在自己商场里面铺设很多的Beacon基站。所有Beacon的UUID应该是一样的。同一楼层Beacon基站的major可以一样，同一商店Beacon的minor值一样。</p>
-
-<h2>Beacon在IOS设备上的实现</h2>
-
-<p>Beacon需要CoreBluetooth.framework和CoreLocation.framework两个framework,先把他们加到项目中。</p>
-
-<h4>发送Beacon信号：</h4>
-
-<pre><code>
-self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:nil];
-
-time_t t;
-srand((unsigned) time(&t));
-CLBeaconRegion *region = [[CLBeaconRegion alloc] initWithProximityUUID:self.beaconRegion.proximityUUID major:rand() minor:rand() identifier:self.beaconRegion.identifier];
-
-NSDictionary *beaconPeripheralData = [region peripheralDataWithMeasuredPower:nil];
-[self.peripheralManager startAdvertising:beaconPeripheralData];
-</code></pre>
-
-
-<h6>需要实现CoreBluetooth里的CBPeripheralManagerDelegate的代理方法</h6>
-
-<pre><code>
-//pragma mark - Beacon advertising delegate methods
-- (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager *)peripheralManager error:(NSError *)error
-{
-    if (error) {
-        NSLog(@"Couldn't turn on advertising: %@", error);
-        return;
-    }
-    
-    if (peripheralManager.isAdvertising) {
-    }
-}
-
-- (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheralManager
-{
-    if (peripheralManager.state != CBPeripheralManagerStatePoweredOn) {
-        NSLog(@"Peripheral manager is off.");
-        return;
-    }
-
-    NSLog(@"Peripheral manager is on.");
-}
-</code></pre>
-
-
-<h4>监控附近的Beacon基站</h4>
-
-<pre><code>
-self.locationManager = [[CLLocationManager alloc] init];
-self.locationManager.delegate = self;
-
-//kUUID可以设置为一个定值，就是监控附近为此UUID的beacon设备。
-
-NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:kUUID];
-self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID identifier:kIdentifier];
-self.beaconRegion.notifyEntryStateOnDisplay = YES;
-
-//开始接收
-[self.locationManager startMonitoringForRegion:self.beaconRegion];
-
-//停止接收
-[self.locationManager stopMonitoringForRegion:self.beaconRegion];
-</code></pre>
-
-
-<h6>需要实现CoreLocation里的CLLocationManagerDelegate的代理方法</h6>
-
-<pre><code>
-//程序会不断调用此方法，beacons包含所有发现的Beacon基站
-- (void)locationManager:(CLLocationManager *)manager
-        didRangeBeacons:(NSArray *)beacons
-               inRegion:(CLBeaconRegion *)region {
-}
-
-//进入beacon区域
-- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
-{
-    NSLog(@"Entered region: %@", region);
-}
-
-//出beacon区域
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
-{
-    NSLog(@"Exited region: %@", region);
-}
-
-//在上面两个方法被调用之后调用
-- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region
-{
-   
-}
-</code></pre>
-
-
-<h4>接受Beacon基站发送的信息</h4>
-
-<pre><code>
-self.locationManager = [[CLLocationManager alloc] init];
-self.locationManager.delegate = self;
-
-NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:kUUID];
-self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID identifier:kIdentifier];
-self.beaconRegion.notifyEntryStateOnDisplay = YES;
-
-//接受Beacon基站的推送信息
-[self.locationManager startRangingBeaconsInRegion:self.beaconRegion];
-//停止Beacon基站的推送信息
-[self.locationManager stopRangingBeaconsInRegion:self.beaconRegion];
-</code></pre>
-
-
-<h3>参考</h3>
-
-<p>iBeacon的一些介绍：<a href="http://www.cocoachina.com/industry/20140730/9275.html">iBeacon 的第一篇（基于Swift实现）</a></p>
-
-<p>Github开源项目<a href="https://github.com/nicktoumpelis/HiBeacons">HiBeacons</a></p>
-
-<p>苹果官方iBeacon例子<a href="https://developer.apple.com/library/ios/samplecode/airlocate/introduction/intro.html">AirLocate: Using CoreLocation to monitor, range, and configure your device as an iBeacon</a></p>
+      <div class="sharing">
+  
+  
+  
 </div>
-  
-  
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/11/26/valueforkey-vs-objectforkey/" title="Previous Post: valueForKey:  vs  objectForKey:">&laquo; valueForKey:  vs  objectForKey:</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-      <a class="prev" href="2">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-<aside class="sidebar">
+  </section>
+
+</div>
+
+  <aside class="sidebar">
    
   
     <section>
@@ -410,6 +203,7 @@ self.beaconRegion.notifyEntryStateOnDisplay = YES;
 </aside>
 
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -424,7 +218,10 @@ self.beaconRegion.notifyEntryStateOnDisplay = YES;
       var disqus_shortname = 'zqpsea';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.sheliw.com/blog/2015/02/16/keychain/';
+        var disqus_url = 'http://blog.sheliw.com/blog/2015/02/16/keychain/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
