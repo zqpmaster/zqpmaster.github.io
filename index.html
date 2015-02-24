@@ -97,23 +97,31 @@
 
 <p>如果把keychain item的类型指定为需要保护的类型比如password或者private key，item的data会被加密并且保护起来，如果把类型指定为不需要保护的类型，比如certificates，item的data就不会被加密。</p>
 
-<p>item可以指定为以下几种类型：
-+ extern CFTypeRef kSecClassGenericPassword
-+ extern CFTypeRef kSecClassInternetPassword
-+ extern CFTypeRef kSecClassCertificate
-+ extern CFTypeRef kSecClassKey
-+ extern CFTypeRef kSecClassIdentity
-+     <strong>OSX_AVAILABLE_STARTING(</strong>MAC_10_7, __IPHONE_2_0);</p>
+<blockquote><p>item可以指定为以下几种类型：</p>
+
+<ul>
+<li>extern CFTypeRef kSecClassGenericPassword</li>
+<li>extern CFTypeRef kSecClassInternetPassword</li>
+<li>extern CFTypeRef kSecClassCertificate</li>
+<li>extern CFTypeRef kSecClassKey</li>
+<li>extern CFTypeRef kSecClassIdentity
+   <strong>OSX_AVAILABLE_STARTING(</strong>MAC_10_7, __IPHONE_2_0);</li>
+</ul>
+</blockquote>
 
 <h2>Keychain的用法</h2>
 
 <p>首先导入Security.framework 。</p>
 
-<p>Keychain的API提供以下几个函数来操作Keychain
-• SecItemAdd 添加一个keychain item
-• SecItemUpdate 修改一个keychain item
-• SecItemCopyMatching 搜索一个keychain item
-• SecItemDelete 删除一个keychain item</p>
+<p>Keychain的API提供以下几个函数来操作Keychain</p>
+
+<ul>
+<li>SecItemAdd 添加一个keychain item</li>
+<li>SecItemUpdate 修改一个keychain item</li>
+<li>SecItemCopyMatching 搜索一个keychain item</li>
+<li>SecItemDelete 删除一个keychain item</li>
+</ul>
+
 
 <p>也可以参考以下这段简单的代码来了解下Keychain API的用法。</p>
 
@@ -187,54 +195,86 @@
 KeychainItemWrapper
 <a href="https://developer.apple.com/library/ios/samplecode/GenericKeychain/Introduction/Intro.html">https://developer.apple.com/library/ios/samplecode/GenericKeychain/Introduction/Intro.html</a>
 虽然这个类封装了Keychain的API，但是不仅代码写的很不容易理解，而且里面也有不少的Bug。所以还是不建议使用。
-目前发现这个类存在的Bug为：
-1.  如果需要某个keychain item支持iCloud备份，添加kSecAttrSynchronizable属性之后，它并没有在第二次更新item或者搜索item的时候加上这一条，所以导致item已经存在但是它却获取不到。
-2.  类型为GenericPassword的item必须使用kSecAttrAccount和kSecAttrService作为主要的key，但是这个类仅仅以kSecAttrGeneric作主要的key。所以在用它添加item的时候容易出现重复添加的错误。</p>
+目前发现这个类存在的Bug为：</p>
+
+<ol>
+<li>如果需要某个keychain item支持iCloud备份，添加kSecAttrSynchronizable属性之后，它并没有在第二次更新item或者搜索item的时候加上这一条，所以导致item已经存在但是它却获取不到。</li>
+<li>类型为GenericPassword的item必须使用kSecAttrAccount和kSecAttrService作为主要的key，但是这个类仅仅以kSecAttrGeneric作主要的key。所以在用它添加item的时候容易出现重复添加的错误。</li>
+</ol>
+
 
 <p>每种类型的Keychain item都有不同的键作为主要的Key也就是唯一标示符用于搜索，更新和删除，Keychain内部不允许添加重复的Item。</p>
 
-<p>keychain item的类型，也就是kSecClass键的值    主要的Key
-kSecClassGenericPassword    kSecAttrAccount,kSecAttrService
-kSecClassInternetPassword   kSecAttrAccount, kSecAttrSecurityDomain, kSecAttrServer, kSecAttrProtocol,
-kSecAttrAuthenticationType, kSecAttrPortkSecAttrPath
-kSecClassCertificate    kSecAttrCertificateType, kSecAttrIssuerkSecAttrSerialNumber
-kSecClassKey    kSecAttrApplicationLabel, kSecAttrApplicationTag, kSecAttrKeyType,
-kSecAttrKeySizeInBits, kSecAttrEffectiveKeySize
-kSecClassIdentity   kSecClassKey,kSecClassCertificate</p>
+<table>
+<thead>
+<tr>
+<th>keychain item的类型，也就是kSecClass键的值        </th>
+<th> 主要的Key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kSecClassGenericPassword </td>
+<td> kSecAttrAccount,kSecAttrService</td>
+</tr>
+<tr>
+<td>kSecClassInternetPassword   </td>
+<td> kSecAttrAccount, kSecAttrSecurityDomain, kSecAttrServer, kSecAttrProtocol,kSecAttrAuthenticationType, kSecAttrPortkSecAttrPath</td>
+</tr>
+<tr>
+<td>kSecClassCertificate  </td>
+<td> kSecAttrCertificateType, kSecAttrIssuerkSecAttrSerialNumber</td>
+</tr>
+<tr>
+<td>kSecClassKey    </td>
+<td> kSecAttrApplicationLabel, kSecAttrApplicationTag, kSecAttrKeyType,kSecAttrKeySizeInBits, kSecAttrEffectiveKeySize</td>
+</tr>
+<tr>
+<td>kSecClassIdentity   </td>
+<td> kSecClassKey,kSecClassCertificate</td>
+</tr>
+</tbody>
+</table>
+
 
 <h2>Keychain的备份</h2>
 
 <ol>
 <li><p>iOS的Keychain由系统管理并且进行加密，Keychain内的信息会随着iPhone的数据一起备份。但是kSecAttrAccessible 属性被设置为后缀是ThisDeviceOnly的数据会被以硬件相关的密钥(key)加密。并且不会随着备份移动至其他设备。</p>
 
-<p>kSecAttrAccessiblein变量用来指定这条信息的保护程度。我们需要对这个选项特别注意，并且使用最严格的选项。这个键（key）可以设置6种值。
-+CFTypeRef kSecAttrAccessibleWhenUnlocked;
-+CFTypeRef kSecAttrAccessibleAfterFirstUnlock;
-+CFTypeRef kSecAttrAccessibleAlways;
-+CFTypeRef kSecAttrAccessibleWhenUnlockedThisDeviceOnly;
-+CFTypeRef kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly;
-+CFTypeRef kSecAttrAccessibleAlwaysThisDeviceOnly;</p>
+<p>kSecAttrAccessiblein变量用来指定这条信息的保护程度。我们需要对这个选项特别注意，并且使用最严格的选项。这个键（key）可以设置6种值。</p>
 
-<p>  从iOS5.0开始kSecAttrAccessible默认为kSecAttrAccessibleWhenUnlocked。</p></li>
-<li><p>Keychain从iOS7.0开始也支持iCloud备份。把kSecAttrSynchronizable属性设置为@YES，这样后Keychain就能被iCloud备份并且跨设备分享。</p></li>
+<ul>
+<li>CFTypeRef kSecAttrAccessibleWhenUnlocked;</li>
+<li>CFTypeRef kSecAttrAccessibleAfterFirstUnlock;</li>
+<li>CFTypeRef kSecAttrAccessibleAlways;</li>
+<li>CFTypeRef kSecAttrAccessibleWhenUnlockedThisDeviceOnly;</li>
+<li>CFTypeRef kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly;</li>
+<li>CFTypeRef kSecAttrAccessibleAlwaysThisDeviceOnly;</li>
+</ul>
+
+
+<p>从iOS5.0开始kSecAttrAccessible默认为kSecAttrAccessibleWhenUnlocked。</p></li>
+<li><p>Keychain从iOS7.0开始也支持iCloud备份。把kSecAttrSynchronizable属性设置为@YES，这样后Keychain就能被iCloud备份并且跨设备分享。</p>
+
+<p>不过在添加kSecAttrSynchronizable属性后，这条属性会被作为每条Keychain Item的主要的Key之一，所以在搜索，更新，删除的时候如果查询字典内没有这一条属性，item就匹配不到。</p></li>
 </ol>
 
-
-<p>不过在添加kSecAttrSynchronizable属性后，这条属性会被作为每条Keychain Item的主要的Key之一，所以在搜索，更新，删除的时候如果查询字典内没有这一条属性，item就匹配不到。</p>
 
 <h2>Keychain Access Group</h2>
 
 <p>Keychain通过provisioning profile来区分不同的应用，provisioning文件内含有应用的bundle id和添加的access groups。不同的应用是完全无法访问其他应用保存在Keychain的信息，除非指定了同样的access group。指定了同样的group名称后，不同的应用间就可以分享保存在Keychain内的信息。</p>
 
-<p>Keychain Access Group的使用方法：
-1.  首先要在Capabilities下打开工程的Keychain Sharing按钮。然后需要分享Keychain的不同应用添   加相同的Group名称。Xcode6以后Group可以随便命名，不需要加AppIdentifierPrefix前缀，并且Xcode会在以entitlements结尾的文件内自动添加所有Group名称，然后在每一个Group前自动加上$(AppIdentifierPrefix)前缀。虽然文档内提到还需要添加一个包含group的.plist文件，其实它和.entitlements文件是同样的作用，所以不需要重复添加。</p>
+<p>Keychain Access Group的使用方法：</p>
 
-<p>但是每个不同的应用第一条Group最好以自己的bundleID命名，因为如果entitlements文件内已经有Keychain Access Groups数组后item的Group属性默认就为数组内的第一条Group。
-2.  需要支持跨设备分享的Keychain item添加一条AccessGroup属性,不过代码里Group名称一定要加上AppIdentifierPrefix前缀。</p>
+<ol>
+<li>首先要在Capabilities下打开工程的Keychain Sharing按钮。然后需要分享Keychain的不同应用添   加相同的Group名称。Xcode6以后Group可以随便命名，不需要加AppIdentifierPrefix前缀，并且Xcode会在以entitlements结尾的文件内自动添加所有Group名称，然后在每一个Group前自动加上$(AppIdentifierPrefix)前缀。虽然文档内提到还需要添加一个包含group的.plist文件，其实它和.entitlements文件是同样的作用，所以不需要重复添加。
+但是每个不同的应用第一条Group最好以自己的bundleID命名，因为如果entitlements文件内已经有Keychain Access Groups数组后item的Group属性默认就为数组内的第一条Group。</li>
+<li>需要支持跨设备分享的Keychain item添加一条AccessGroup属性,不过代码里Group名称一定要加上AppIdentifierPrefix前缀。
+[searchDictionary setObject:@“AppIdentifierPrefix.UC.testWriteKeychainSuit”     forKey:(id)kSecAttrAccessGroup];
+如果要在app内部存私有的信息，group置为自己的bundleID即可，如果entitlements文件内没有指定Keychain Access Groups数组。那group也可以置为nil，这样默认也会以自己的bundleID作为Group。</li>
+</ol>
 
-<p>[searchDictionary setObject:@“AppIdentifierPrefix.UC.testWriteKeychainSuit”     forKey:(id)kSecAttrAccessGroup];</p>
-
-<p>如果要在app内部存私有的信息，group置为自己的bundleID即可，如果entitlements文件内没有指定Keychain Access Groups数组。那group也可以置为nil，这样默认也会以自己的bundleID作为Group。</p>
 
 <h2>Keychain的安全性</h2>
 
