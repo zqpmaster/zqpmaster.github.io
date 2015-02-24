@@ -4,7 +4,7 @@
   <title><![CDATA[Max Blog]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2015-02-24T15:34:35+08:00</updated>
+  <updated>2015-02-24T15:39:42+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -128,7 +128,7 @@
 KeychainItemWrapper
 <a href="https://developer.apple.com/library/ios/samplecode/GenericKeychain/Introduction/Intro.html">https://developer.apple.com/library/ios/samplecode/GenericKeychain/Introduction/Intro.html</a>
 虽然这个类封装了Keychain的API，但是不仅代码写的很不容易理解，而且里面也有不少的Bug。所以还是不建议使用。
-目前发现这个类存在的Bug为：</p>
+目前发现这个类的1.2版存在的Bug为：</p>
 
 <ol>
 <li>如果需要某个keychain item支持iCloud备份，添加kSecAttrSynchronizable属性之后，它并没有在第二次更新item或者搜索item的时候加上这一条，所以导致item已经存在但是它却获取不到。</li>
