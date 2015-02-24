@@ -268,7 +268,7 @@ KeychainItemWrapper
 <li><p>首先要在Capabilities下打开工程的Keychain Sharing按钮。然后需要分享Keychain的不同应用添   加相同的Group名称。Xcode6以后Group可以随便命名，不需要加AppIdentifierPrefix前缀，并且Xcode会在以entitlements结尾的文件内自动添加所有Group名称，然后在每一个Group前自动加上$(AppIdentifierPrefix)前缀。虽然文档内提到还需要添加一个包含group的.plist文件，其实它和.entitlements文件是同样的作用，所以不需要重复添加。
 但是每个不同的应用第一条Group最好以自己的bundleID命名，因为如果entitlements文件内已经有Keychain Access Groups数组后item的Group属性默认就为数组内的第一条Grop。</p></li>
 <li><p>需要支持跨设备分享的Keychain item添加一条AccessGroup属性,不过代码里Group名称一定要加上AppIdentifierPrefix前缀。
-[searchDictionary setObject:@“AppIdentifierPrefix.UC.testWriteKeychainSuit”     forKey:(id)kSecAttrAccessGroup];
+<code>[searchDictionary setObject:@“AppIdentifierPrefix.UC.testWriteKeychainSuit”     forKey:(id)kSecAttrAccessGroup];</code>
 如果要在app内部存私有的信息，group置为自己的bundleID即可，如果entitlements文件内没有指定Keychain Access Groups数组。那group也可以置为nil，这样默认也会以自己的bundleID作为Group。</p></li>
 </ol>
 
