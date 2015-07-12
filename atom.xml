@@ -4,7 +4,7 @@
   <title><![CDATA[Max Blog]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2015-06-18T21:36:45+08:00</updated>
+  <updated>2015-07-12T21:05:41+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -12,6 +12,17 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[带不走的是青春]]></title>
+    <link href="http://blog.sheliw.com/blog/2015/07/12/dai-bu-zou-de-shi-qing-chun/"/>
+    <updated>2015-07-12T21:03:01+08:00</updated>
+    <id>http://blog.sheliw.com/blog/2015/07/12/dai-bu-zou-de-shi-qing-chun</id>
+    <content type="html"><![CDATA[<p>明天毕业典礼。后天离开北京。带不走的是青春。</p>
+
+<p>2015年7月 北京</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Keychain]]></title>
