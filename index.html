@@ -9,7 +9,7 @@
   <meta name="author" content="一切从简">
 
   
-  <meta name="description" content="最近打算做一个比较两个XML文件的小工具，然后就找到了Python的ElementTree，这个库非常高效，API也非常简洁。Python也有很多其他库可以用来解析XML文件。具体的对比看这篇文章。 http://pycoders-weekly-chinese.readthedocs.org/en &hellip;">
+  <meta name="description" content="最近打算做一个比较两个XML文件的小工具，然后就找到了Python的ElementTree，这个库非常高效，API也非常简洁。Python也有很多其他库可以用来解析XML文件。具体的对比请看这篇文章。 http://pycoders-weekly-chinese.readthedocs.org/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,7 +93,7 @@
   </header>
 
 
-  <div class="entry-content"><p>最近打算做一个比较两个XML文件的小工具，然后就找到了Python的ElementTree，这个库非常高效，API也非常简洁。Python也有很多其他库可以用来解析XML文件。具体的对比看这篇文章。</p>
+  <div class="entry-content"><p>最近打算做一个比较两个XML文件的小工具，然后就找到了Python的ElementTree，这个库非常高效，API也非常简洁。Python也有很多其他库可以用来解析XML文件。具体的对比请看这篇文章。</p>
 
 <p><a href="http://pycoders-weekly-chinese.readthedocs.org/en/latest/issue6/processing-xml-in-python-with-element-tree.html">http://pycoders-weekly-chinese.readthedocs.org/en/latest/issue6/processing-xml-in-python-with-element-tree.html</a></p>
 
@@ -151,7 +151,7 @@ for item in root:
 
 
 <p></code>
-这样虽然能保证生成的XML文件格式不出错。但是如果我还想让生成的XML文件内对空格，双引号，单引号做转义的话就比较难了。就算我在使用write()方法生成XML文件前用escape方法手动转义，write()方法也会把所有&amp;字符给替换了。</p>
+这样虽然能保证生成的XML文件格式不出错。但是如果我还想让生成的XML文件内对空格，双引号，单引号做转义的话就比较难了。就算我在使用write()方法生成XML文件前用 xml.sax.saxutils.escape()方法手动转义，write()方法也会把所有&amp;字符给替换了。因为空格，双引号，单引号被转义后都是有&amp;字符的。</p>
 
 <p>最后没有想到其他好办法，只好把ElementTree库拷贝了一份出来，然后对内部的_escape_cdata方法做了一些修改，然后就大功告成了。如果你有好的办法，欢迎给我留言。</p>
 </div>
