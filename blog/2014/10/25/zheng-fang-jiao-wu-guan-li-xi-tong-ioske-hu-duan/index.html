@@ -9,9 +9,8 @@
   <meta name="author" content="一切从简">
 
   
-  <meta name="description" content="用到的几个工具 chrome的开发者工具 查看每次HTTP请求命令与参数等。
-AFNetworking ios网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI好像好久没有更新。
-TFhepple Html分析类库。 &hellip;">
+  <meta name="description" content="最近和朋友一起做完了学校的教务系统iOS客户端，这里写一下我遇到的一些问题和心得。 用到的几个工具 chrome的开发者工具 查看每次HTTP请求命令与参数等。
+AFNetworking ios网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +91,9 @@ TFhepple Html分析类库。 &hellip;">
   </header>
 
 
-<div class="entry-content"><p>用到的几个工具</p>
+<div class="entry-content"><p>最近和朋友一起做完了学校的教务系统iOS客户端，这里写一下我遇到的一些问题和心得。</p>
+
+<h3>用到的几个工具</h3>
 
 <ol>
 <li>chrome的开发者工具   查看每次HTTP请求命令与参数等。</li>
@@ -100,6 +101,8 @@ TFhepple Html分析类库。 &hellip;">
 <li>TFhepple    Html分析类库。</li>
 </ol>
 
+
+<h3>编码</h3>
 
 <p>正方教务系统因为没有对应的JSON或者XML数据接口，所以只能模拟网页的所有行为，获取html 分析html。
 正方教务系统用的编码是GB2312 框架获取下来的NSString虽然已经自动解码，但是很不稳定，有时候会得到空字符串，但是获取下来的DATA就没有这个问题，所以就要手动解码将DATA转为NSString。</p>
@@ -127,8 +130,9 @@ NSString *utf8HtmlStr = [transStr stringByReplacingOccurrencesOfString:@"content
 
 <p>其他页面要怎么替换具体要看页面头部具体的信息是什么，然后写在 stringByReplacingOccurrencesOfString方法第一个参数部分就可以。</p>
 
-<p>模拟登陆部分
-首先是获取Cookie，这个用 NSURLRequest就能获取到，之后要在每次请求的时候加到 NSMutableURLRequest 里。AFnetworking在每次请求的时候都会建立一个NSURLRequest对象，改这个就可以。代码如下
+<h3>模拟登陆</h3>
+
+<p>模拟登陆第一步要获取Cookie，这个用 NSURLRequest就能获取到，之后要在每次请求的时候加到 NSMutableURLRequest 里。AFnetworking在每次请求的时候都会建立一个NSURLRequest对象，改这个就可以。代码如下
 获取cookie</p>
 
 <pre><code> 
