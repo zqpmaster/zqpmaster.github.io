@@ -9,7 +9,7 @@
   <meta name="author" content="一切从简">
 
   
-  <meta name="description" content="明天毕业典礼，后天离开北京。今天校园里拍毕业照的人异常的多，看着总觉得很伤感。等这一刻其实也等了很久。 四年的喜怒哀乐马上要结束了。下次来北京也不知道会是什么时候，来北京还会不会想起曾经让我无限失落的往事。 2015年7月 北京
+  <meta name="description" content="
 ">
   
 
@@ -72,6 +72,35 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/09/05/shi-yong-pythonku-elementtreejie-xi-xmlwen-jian/">使用Python库ElementTree解析XML文件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-09-05T19:18:30+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>7:18 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -345,50 +374,6 @@ KeychainItemWrapper
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/26/valueforkey-vs-objectforkey/">valueForKey: Vs objectForKey:</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-11-26T19:51:01+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:51 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>访问NSDictionary时既可以使用字典内的方法<code>objectForKey:</code>，也可以使用KVC的方法<code>valueForKey:</code>。但是使用这两种方法有什么区别呢？</p>
-
-<ul>
-<li><p><code>+ (id)valueForKey:(NSString *)key</code> 的key必须是NSString型，<code>- (id)objectForKey:(id)aKey</code> 的key可以是id类型也就是任何NSObject的子类，不过这个key必须遵循NSCopying协议。</p></li>
-<li><p><code>+ (id)valueForKey:(NSString *)key</code>作为一个KVC方法，可以适用于任何类，可以在运行时改变任何类的一个属性。其他语言很少能做到这一点。<code>- (id)objectForKey:(id)aKey</code>只用于NSDictionary或者其子类。</p></li>
-<li><p><code>+ (id)valueForKey:(NSString *)key</code>用于NSDictionary时，如果key不包含@,将会调用<code>objectForKey:</code>。如果key包含@，将会调用<code>[super valueForKey:]</code>，这就会导致如果key不存在时将会执行此方法 <code>valueForUndefinedKey:</code>并抛出异常。<code>- (id)objectForKey:(id)aKey</code>在访问NSDictionary里不存在的key时。得到的object为nil。但是不会抛出异常。</p></li>
-</ul>
-
-
-<p>如文档所说：</p>
-
-<blockquote><p><code>valueForKey:</code> Discussion:</p>
-
-<p>If key does not start with “@”, invokes <code>objectForKey:</code>. If key does start with “@”, strips the “@” and invokes <code>[super valueForKey:]</code> with the rest of the key.</p></blockquote>
-
-<p>总之，从速度，安全性方面考虑我们应该在能用<code>objectForKey:</code>的地方就不要用<code>valueForKey:</code>。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -402,6 +387,10 @@ KeychainItemWrapper
     <section>
   <h1>最新文章</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/09/05/shi-yong-pythonku-elementtreejie-xi-xmlwen-jian/">使用Python库ElementTree解析XML文件</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/07/12/dai-bu-zou-de-shi-qing-chun/">再见了，北京</a>
@@ -421,10 +410,6 @@ KeychainItemWrapper
     
       <li class="post">
         <a href="/blog/2014/10/25/ru-he-shi-yong-xibshe-zhi-shi-tu-de-geng-duo-shu-xing/">如何使用XIB设置视图的更多属性</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/25/zheng-fang-jiao-wu-guan-li-xi-tong-ioske-hu-duan/">正方教务管理系统IOS客户端</a>
       </li>
     
   </ul>

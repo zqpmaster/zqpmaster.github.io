@@ -4,7 +4,7 @@
   <title><![CDATA[Max Blog]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2015-07-29T23:21:06+08:00</updated>
+  <updated>2015-09-05T19:20:04+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用Python库ElementTree解析XML文件]]></title>
+    <link href="http://blog.sheliw.com/blog/2015/09/05/shi-yong-pythonku-elementtreejie-xi-xmlwen-jian/"/>
+    <updated>2015-09-05T19:18:30+08:00</updated>
+    <id>http://blog.sheliw.com/blog/2015/09/05/shi-yong-pythonku-elementtreejie-xi-xmlwen-jian</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[再见了，北京]]></title>
