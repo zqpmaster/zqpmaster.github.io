@@ -4,7 +4,7 @@
   <title><![CDATA[Max Blog]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2016-02-28T12:18:57+08:00</updated>
+  <updated>2016-02-28T22:18:26+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -136,7 +136,7 @@ for item in root:
     <id>http://blog.sheliw.com/blog/2015/07/12/dai-bu-zou-de-shi-qing-chun</id>
     <content type="html"><![CDATA[<p>明天毕业典礼，后天离开北京。今天校园里拍毕业照的人异常的多，看着总觉得很伤感。等这一刻其实也等了很久。</p>
 
-<p>四年的喜怒哀乐马上要结束了。下次来北京也不知道会是什么时候，来北京还会不会想起曾经让我无限失落的往事。</p>
+<p>四年的喜怒哀乐马上要结束了。下次来北京也不知道会是什么时候。如果来北京不知道还会不会想起曾经让我无限失落的往事。</p>
 
 <p>2015年7月 北京</p>
 ]]></content>
