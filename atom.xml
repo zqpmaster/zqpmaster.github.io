@@ -4,7 +4,7 @@
   <title><![CDATA[Max Blog]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2016-02-18T22:27:35+08:00</updated>
+  <updated>2016-02-28T12:15:45+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -584,6 +584,8 @@ self.beaconRegion.notifyEntryStateOnDisplay = YES;
 <li>TFhepple    Html分析类库。</li>
 </ol>
 
+
+<p>在做数据层的时候，我通过获取正方系统的html源码，然后解析成本地数据。这中间主要遇到了页面编码和模拟登陆两个问题。</p>
 
 <h3>编码</h3>
 
