@@ -9,7 +9,7 @@
   <meta name="author" content="一切从简">
 
   
-  <meta name="description" content="什么是Beacon? Beacon技术最简单的理解可以是一个小型的信息基站，而多个Beacon能构成信息服务网络。Beacon的工作方式是Transmitter-Receiver，即基站-接收机模式的。基站？这个时候不要想到移动、联通的那些大铁塔。这个基站可以是一个运行着Bluetooth 4.0 &hellip;">
+  <meta name="description" content="最近遇到了将ScrollView放在XIB的视图里，用代码设置contentSize后，scrollView不能滑动的问题。费了很大劲之后找到正确的办法，并且发现XIB的一个极为实用的技巧。如果想用XIB设置视图更多的属性。可以使用Identity inspector下的User Defined &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,189 +70,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/11/ibeacon/">探寻Beacon技术</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-11-11T22:26:32+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:26 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>什么是Beacon?</h2>
-
-<p>Beacon技术最简单的理解可以是一个小型的信息基站，而多个Beacon能构成信息服务网络。Beacon的工作方式是Transmitter-Receiver，即基站-接收机模式的。基站？这个时候不要想到移动、联通的那些大铁塔。这个基站可以是一个运行着Bluetooth 4.0 LE的设备，也可以是经过配置的iPhone、iPad。iPhone4S和之后的iPhone、iPad3或之后的iPad，包括iPad mini都可以配置成Beacon基站。</p>
-
-<h2>Beacon技术的优势</h2>
-
-<p>Beacon技术的优势其实就是低功耗蓝牙的优势。大部分的Beacon硬件连接范围达到200英尺，而且低功耗蓝牙不像WiFi那样需要网络连接，低功耗蓝牙只要有两个点就能运作起来。</p>
-
-<h2>Beacon的应用</h2>
-
-<ol>
-<li>零售
-通过Beacon向用户推送优惠信息，收集顾客在店内的消费数据。零售店主显然是第一波吃螃蟹的人。</li>
-<li>支付
-零售业同样是最先开始试水的一支，但这项的使用场景还会扩张。比如当用户进入或者离开一个场地时，自动发起一次支付（用于景点之类的购票）。</li>
-<li>交通
-机场、火车站、地铁换乘站针对乘客的信息推送。目前只是换乘、导航、天气信息，但未来可以发展成行程服务信息，比如当乘客到达后自动打车。</li>
-<li>家居
-同样是基于地理围栏的信息通知，比如告诉父母孩子回到家里了。</li>
-</ol>
-
-
-<h2>Beacon设备的技术原理</h2>
-
-<p>一个Beacon基站主要有三部分标识：</p>
-
-<ol>
-<li>UUID，形如：206A2476-D4DB-42F0-BF73-030236F2C756。用来标识某一个公司。比如，某个房地产公司的全部的基站都用同一个UUID。</li>
-<li>major，用来标识某一类的beacon。比如这个房地产公司的北京的房子都设定为1，上海的都设定为2。</li>
-<li>minor，用来标识某一个特定的beacon。比如某栋楼的某个基站。</li>
-</ol>
-
-
-<p>Beacon设备发送信号成为一个Beacon基站。然后另一个设备比如iPhone可以用一款App来监听附近某个UUID的Beacon基站，就算程序被关闭后，如果iPhone在附近发现此UUID的Beacon基站，App就能被唤醒，并且在iPhone锁屏界面的右下角会出现App的小图标。</p>
-
-<p>一般情况下如果一个商场在自己商场里面铺设很多的Beacon基站。所有Beacon的UUID应该是一样的。同一楼层Beacon基站的major可以一样，同一商店Beacon的minor值一样。</p>
-
-<h2>Beacon在IOS设备上的实现</h2>
-
-<p>Beacon需要CoreBluetooth.framework和CoreLocation.framework两个framework,先把他们加到项目中。</p>
-
-<h4>发送Beacon信号：</h4>
-
-<pre><code>
-self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:nil];
-
-time_t t;
-srand((unsigned) time(&t));
-CLBeaconRegion *region = [[CLBeaconRegion alloc] initWithProximityUUID:self.beaconRegion.proximityUUID major:rand() minor:rand() identifier:self.beaconRegion.identifier];
-
-NSDictionary *beaconPeripheralData = [region peripheralDataWithMeasuredPower:nil];
-[self.peripheralManager startAdvertising:beaconPeripheralData];
-</code></pre>
-
-
-<h6>需要实现CoreBluetooth里的CBPeripheralManagerDelegate的代理方法</h6>
-
-<pre><code>
-//pragma mark - Beacon advertising delegate methods
-- (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager *)peripheralManager error:(NSError *)error
-{
-    if (error) {
-        NSLog(@"Couldn't turn on advertising: %@", error);
-        return;
-    }
-    
-    if (peripheralManager.isAdvertising) {
-    }
-}
-
-- (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheralManager
-{
-    if (peripheralManager.state != CBPeripheralManagerStatePoweredOn) {
-        NSLog(@"Peripheral manager is off.");
-        return;
-    }
-
-    NSLog(@"Peripheral manager is on.");
-}
-</code></pre>
-
-
-<h4>监控附近的Beacon基站</h4>
-
-<pre><code>
-self.locationManager = [[CLLocationManager alloc] init];
-self.locationManager.delegate = self;
-
-//kUUID可以设置为一个定值，就是监控附近为此UUID的beacon设备。
-
-NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:kUUID];
-self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID identifier:kIdentifier];
-self.beaconRegion.notifyEntryStateOnDisplay = YES;
-
-//开始接收
-[self.locationManager startMonitoringForRegion:self.beaconRegion];
-
-//停止接收
-[self.locationManager stopMonitoringForRegion:self.beaconRegion];
-</code></pre>
-
-
-<h6>需要实现CoreLocation里的CLLocationManagerDelegate的代理方法</h6>
-
-<pre><code>
-//程序会不断调用此方法，beacons包含所有发现的Beacon基站
-- (void)locationManager:(CLLocationManager *)manager
-        didRangeBeacons:(NSArray *)beacons
-               inRegion:(CLBeaconRegion *)region {
-}
-
-//进入beacon区域
-- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
-{
-    NSLog(@"Entered region: %@", region);
-}
-
-//出beacon区域
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
-{
-    NSLog(@"Exited region: %@", region);
-}
-
-//在上面两个方法被调用之后调用
-- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region
-{
-   
-}
-</code></pre>
-
-
-<h4>接受Beacon基站发送的信息</h4>
-
-<pre><code>
-self.locationManager = [[CLLocationManager alloc] init];
-self.locationManager.delegate = self;
-
-NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:kUUID];
-self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID identifier:kIdentifier];
-self.beaconRegion.notifyEntryStateOnDisplay = YES;
-
-//接受Beacon基站的推送信息
-[self.locationManager startRangingBeaconsInRegion:self.beaconRegion];
-//停止Beacon基站的推送信息
-[self.locationManager stopRangingBeaconsInRegion:self.beaconRegion];
-</code></pre>
-
-
-<h3>参考</h3>
-
-<p>iBeacon的一些介绍：<a href="http://www.cocoachina.com/industry/20140730/9275.html">iBeacon 的第一篇（基于Swift实现）</a></p>
-
-<p>Github开源项目<a href="https://github.com/nicktoumpelis/HiBeacons">HiBeacons</a></p>
-
-<p>苹果官方iBeacon例子<a href="https://developer.apple.com/library/ios/samplecode/airlocate/introduction/intro.html">AirLocate: Using CoreLocation to monitor, range, and configure your device as an iBeacon</a></p>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -424,6 +241,169 @@ NSDictionary *parameters = @{@"__VIEWSTATE":self.viewState,@"txtUserName"self.xu
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/25/ru-he-zai-cocos2d-xyou-xi-li-ji-cheng-iadyan-gao/">如何在Cocos2d-x游戏里集成iAd广告</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-25T12:54:03+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:54 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1) Link binary with iAd.framework<a href="https://developer.apple.com/library/ios/#recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html">https://developer.apple.com/library/ios/#recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html</a></p>
+
+<pre><code>1. In the project navigator, select your project
+2. Select your target
+3.  Select the 'Build Phases' tab
+4.  Open 'Link Binaries With Libraries' expander    5.  Click the '+' button
+6.  Select iAd.framework
+</code></pre>
+
+<p>2) Download iAdSuite<a href="https://developer.apple.com/library/ios/#samplecode/iAdSuite/Introduction/Intro.html">https://developer.apple.com/library/ios/#samplecode/iAdSuite/Introduction/Intro.html</a> and copy files BannerViewController.h and BannerViewController.m from ContainerBanner project to your project.</p>
+
+<p>3) Modify AppController.mm, add</p>
+
+<pre><code>&lt;code&gt;&lt;pre&gt;#import "BannerViewController.h"&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+
+<p>and replace</p>
+
+<pre><code>@implementationAppController
+</code></pre>
+
+<p>with</p>
+
+<pre><code>@implementationAppController
+{
+    BannerViewController*_bannerViewController;
+}
+</code></pre>
+
+<p>and</p>
+
+<pre><code>// Set RootViewController to window
+if([[UIDevicecurrentDevice].systemVersionfloatValue]&lt; 6.0)
+{
+//
+ warning: addSubView doesn't work on iOS6
+    [window addSubview:viewController.view];
+}else
+{
+//use this method on ios6
+    [window setRootViewController:viewController];
+}
+</code></pre>
+
+<p>with</p>
+
+<pre><code>_bannerViewController=[[BannerViewController alloc]initWithContentViewController:viewController];
+window.rootViewController=_bannerViewController;
+</code></pre>
+
+<p>4) Modify RootViewController.mm, add</p>
+
+<pre><code>#import"BannerViewController.h"
+</code></pre>
+
+<p>and replace
+<code><pre>
+/<em>
+//The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
+-(id)initWithNibName:(NSString </em>)nibNameOrNil bundle:(NSBundle <em>)nibBundleOrNil {
+ if((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
+//Custom initialization
+}
+ return self;
+}
+</em>/
+</code></pre>
+with
+<code><pre>
+-(id)initWithNibName:(NSString<em>)nibNameOrNil bundle:(NSBundle</em>)nibBundleOrNil
+ {
+    if((self=[super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])){
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(willBeginBannerViewActionNotification:)    name:BannerViewActionWillBegin object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didFinishBannerViewActionNotification:)name:BannerViewActionDidFinisho bject:nil];
+}
+    return self;
+}
+</code></pre></p>
+
+<p>and add the following methods
+<code><pre>
+-(void)willBeginBannerViewActionNotification:(NSNotification<em>)notification{
+    NSLog(@&ldquo;willBeginBannerViewActionNotification&rdquo;);
+}
+-(void)didFinishBannerViewActionNotification:(NSNotification</em>)notification
+{
+    NSLog(@&ldquo;didFinishBannerViewActionNotification&rdquo;);
+}
+</code></pre></p>
+
+<p>In willBeginBannerViewActionNotification you can pause your game before the banner view triggers an advertising action. In didFinishBannerViewActionNotification you can resume your game when control is returned to it.</p>
+
+<p>BannerViewController changes EAGLView size when banner becomes visible. If you use it like that, cocos2d-x may not detect touch location correctly. Here are the modifications to BannerViewController.m required to display ADBannerView on top of EAGLView.</p>
+
+<p>1) Edit loadView method and put line</p>
+
+<pre><code>[contentView addSubview:_bannerView];
+</code></pre>
+
+<p>after</p>
+
+<pre><code>[contentView addSubview:_contentController.view];
+</code></pre>
+
+<p>loadView should look like this:
+<code><pre>
+-(void)loadView
+{
+    UIView *contentView=[[UIView alloc]initWithFrame[[UIScreen mainScreen]bounds]];
+   [self addChildViewController:<em>contentController];
+   [contentView addSubview:</em>contentController.view];
+   [<em>contentController didMoveToParentViewController:self];
+   [contentView addSubview:</em>bannerView];
+   self.view=contentView;
+}</code></pre>
+2) Edit viewDidLayoutSubviews method and replace
+<code><pre>
+if(<em>bannerView.bannerLoaded)
+ {
+    contentFrame.size.height-=bannerFrame.size.height;
+    bannerFrame.origin.y=contentFrame.size.height;
+}else{
+   bannerFrame.origin.y=contentFrame.size.height;
+}
+</code></pre>
+with
+<code><pre>
+if(</em>bannerView.bannerLoaded)
+ {
+    bannerFrame.origin.y=0;
+}else{
+    bannerFrame.origin.y= -bannerFrame.size.height;
+}
+</code></pre>
+P.S. Are you sure you want to use iAd? Besides low fill rate, there are some limitations. For instance, Apple’s policy is not to serve iAd advertisements to applications that are designed for children as stated at <a href="https://developer.apple.com/support/ios/iad-network.html.">https://developer.apple.com/support/ios/iad-network.html.</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/posts/4">&larr; Older</a>
@@ -439,10 +419,6 @@ NSDictionary *parameters = @{@"__VIEWSTATE":self.viewState,@"txtUserName"self.xu
     <section>
   <h1>最新文章</h1>
   <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2016/02/28/2016/">2016</a>
-      </li>
     
       <li class="post">
         <a href="/blog/2016/01/20/wo-yao-cai-geng-duo-de-chu-ju/">我要采更多的雏菊</a>
@@ -462,6 +438,10 @@ NSDictionary *parameters = @{@"__VIEWSTATE":self.viewState,@"txtUserName"self.xu
     
       <li class="post">
         <a href="/blog/2014/11/26/valueforkey-vs-objectforkey/">valueForKey: Vs objectForKey:</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/11/ibeacon/">探寻Beacon技术</a>
       </li>
     
   </ul>
