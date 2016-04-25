@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>NSOperationQueue与GCD的区别 - Max Blog</title>
+  <title>2016 - Max Blog</title>
   <meta name="author" content="一切从简">
 
   
-  <meta name="description" content="首先，我们要明确NSOperationQueue与GCD之间的关系 NSOpertaionQueue用GCD构建封装的，是GCD的高级抽象。
-其次，我们要区别两者的不同 GCD仅仅支持FIFO队列，而NSOperationQueue中的队列可以被重新设置优先级，从而实现不同操作的执行顺序调整。 &hellip;">
+  <meta name="description" content="2016已经开始两个月了。来公司也已经接近七个月。貌似我还没有什么太大的进展。 写博客的次数也是越来越少了，我也没有要求自己多长时间写一篇之类的。写代码也不是非要写博客，博客写的好也代表不了什么。 回顾一下2015年下半年，我逃离了北京。但是北京带给我的不适感到现在也没有消失。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.sheliw.com/blog/2014/10/11/nsoperationqueue-vs-gcd/">
+  <link rel="canonical" href="http://blog.sheliw.com/blog/2016/02/28/2016/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Max Blog" type="application/atom+xml">
@@ -74,7 +73,7 @@
   
   <header>
     
-      <h1 class="entry-title">NSOperationQueue与GCD的区别</h1>
+      <h1 class="entry-title">2016</h1>
     
     
       <p class="meta">
@@ -83,35 +82,22 @@
 
 
 
-<time class='entry-date' datetime='2014-10-11T10:49:58+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:49 am</span></time>
+<time class='entry-date' datetime='2016-02-28T22:19:10+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>10:19 pm</span></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>首先，我们要明确NSOperationQueue与GCD之间的关系</p>
+<div class="entry-content"><p>2016已经开始两个月了。来公司也已经接近七个月。貌似我还没有什么太大的进展。</p>
 
-<p>NSOpertaionQueue用GCD构建封装的，是GCD的高级抽象。
-其次，我们要区别两者的不同</p>
+<p>写博客的次数也是越来越少了，我也没有要求自己多长时间写一篇之类的。写代码也不是非要写博客，博客写的好也代表不了什么。</p>
 
-<p>GCD仅仅支持FIFO队列，而NSOperationQueue中的队列可以被重新设置优先级，从而实现不同操作的执行顺序调整。
-GCD不支持异步操作之间的依赖关系设置。如果某个操作的依赖另一个操作的数据（生产者-消费者模型是其中之一），使用NSOperationQueue能够按照正确的顺序执行操作。GCD则没有内建的依赖关系支持。</p>
+<p>回顾一下2015年下半年，我逃离了北京。但是北京带给我的不适感到现在也没有消失。广州总的来说还是很舒服的。没有北上深那种高房价带来的压力，也没有二线城市的那些不便。不过哪个城市都有它阴暗的地方，所以深究去对比也没什么意思。</p>
 
-<p>NSOperationQueue支持KVO，意味着我们可以观察任务的执行状态。</p>
+<p>最近准备写几个项目或者给开源社区做做贡献。</p>
 
-<p>了解以上不同，我们可以从以下角度来定义原则</p>
-
-<ol>
-<li><p>性能
-GCD更接近底层，而NSOperationQueue则更高级抽象，所以GCD在追求性能的底层操作来说，是速度最快的。这取决于使用Instruments进行代码性能分析，如有必要的话</p></li>
-<li><p>从异步操作之间的事务性，顺序行，依赖关系，任务并发数量，任务优先级。GCD需要自己写更多的代码来实现，而NSOperationQueue已经内建了这些支持</p></li>
-<li><p>如果异步操作的过程需要更多的被交互和UI呈现出来，NSOperationQueue会是一个更好的选择。底层代码中，任务之间不太互相依赖，而需要更高的并发能力，GCD则更有优势</p></li>
-</ol>
-
-
-<p>最后的一句话
-别忘了高德纳的教诲：“在大概97%的时间里，我们应该忘记微小的性能提升。过早优化是万恶之源。”只有Instruments显示有真正的性能提升时才有必要用低级的GCD。</p>
+<p>2016年3月 广州</p>
 </div>
 
 
@@ -127,7 +113,7 @@ GCD更接近底层，而NSOperationQueue则更高级抽象，所以GCD在追求�
 
 
 
-<time class='entry-date' datetime='2014-10-11T10:49:58+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:49 am</span></time>
+<time class='entry-date' datetime='2016-02-28T22:19:10+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>10:19 pm</span></time>
       
 
 
@@ -142,10 +128,8 @@ GCD更接近底层，而NSOperationQueue则更高级抽象，所以GCD在追求�
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/10/04/block/" title="Previous Post: Block, weakSelf and strongSelf">&laquo; Block, weakSelf and strongSelf</a>
+        <a class="basic-alignment left" href="/blog/2016/01/20/wo-yao-cai-geng-duo-de-chu-ju/" title="Previous Post: 我要采更多的雏菊">&laquo; 我要采更多的雏菊</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/10/25/ru-he-zai-cocos2d-xyou-xi-li-ji-cheng-iadyan-gao/" title="Next Post: 如何在Cocos2d-x游戏里集成iAd广告">如何在Cocos2d-x游戏里集成iAd广告 &raquo;</a>
       
     </p>
   </footer>
@@ -234,8 +218,8 @@ GCD更接近底层，而NSOperationQueue则更高级抽象，所以GCD在追求�
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://blog.sheliw.com/blog/2014/10/11/nsoperationqueue-vs-gcd/';
-        var disqus_url = 'http://blog.sheliw.com/blog/2014/10/11/nsoperationqueue-vs-gcd/';
+        var disqus_identifier = 'http://blog.sheliw.com/blog/2016/02/28/2016/';
+        var disqus_url = 'http://blog.sheliw.com/blog/2016/02/28/2016/';
         var disqus_script = 'embed.js';
       
     (function () {
