@@ -4,7 +4,7 @@
   <title><![CDATA[Max Blog]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2016-04-30T00:43:56+08:00</updated>
+  <updated>2016-04-30T00:52:46+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -18,7 +18,7 @@
     <link href="http://blog.sheliw.com/blog/2016/04/30/mxcardlayout/"/>
     <updated>2016-04-30T00:08:55+08:00</updated>
     <id>http://blog.sheliw.com/blog/2016/04/30/mxcardlayout</id>
-    <content type="html"><![CDATA[<p>MXCardLayout是仿照iOS9多任务切换实现的一个卡片流布局。这是第一个我在咖啡馆完成的项目。</p>
+    <content type="html"><![CDATA[<p>MXCardLayout是仿照iOS9多任务切换实现的一个卡片流布局。这是我的第一个在咖啡馆完成的项目。</p>
 
 <p>MXCardLayout继承自UICollectionViewLayout。</p>
 
