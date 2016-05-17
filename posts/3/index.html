@@ -9,8 +9,7 @@
   <meta name="author" content="一切从简">
 
   
-  <meta name="description" content="明天毕业典礼，后天离开北京。今天校园里拍毕业照的人异常的多，看着总觉得很伤感。等这一刻其实也等了很久。 四年的喜怒哀乐马上要结束了。下次来北京也不知道会是什么时候。如果来北京不知道还会不会想起曾经让我无限失落的往事。 2015年7月 北京
-">
+  <meta name="description" content="什么是Keychain? 根据苹果的介绍，iOS设备中的Keychain是一个安全的存储容器，可以用来为不同应用保存敏感信息比如用户名，密码，网络密码，认证令牌。苹果自己用keychain来保存Wi-Fi网络密码，VPN凭证等等。它是一个在所有app之外的sqlite数据库。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,39 +70,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/07/12/dai-bu-zou-de-shi-qing-chun/">再见了，北京</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-07-12T21:03:01+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:03 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>明天毕业典礼，后天离开北京。今天校园里拍毕业照的人异常的多，看着总觉得很伤感。等这一刻其实也等了很久。</p>
-
-<p>四年的喜怒哀乐马上要结束了。下次来北京也不知道会是什么时候。如果来北京不知道还会不会想起曾经让我无限失落的往事。</p>
-
-<p>2015年7月 北京</p>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -388,6 +354,189 @@ KeychainItemWrapper
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/11/ibeacon/">探寻Beacon技术</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-11-11T22:26:32+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:26 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>什么是Beacon?</h2>
+
+<p>Beacon技术最简单的理解可以是一个小型的信息基站，而多个Beacon能构成信息服务网络。Beacon的工作方式是Transmitter-Receiver，即基站-接收机模式的。基站？这个时候不要想到移动、联通的那些大铁塔。这个基站可以是一个运行着Bluetooth 4.0 LE的设备，也可以是经过配置的iPhone、iPad。iPhone4S和之后的iPhone、iPad3或之后的iPad，包括iPad mini都可以配置成Beacon基站。</p>
+
+<h2>Beacon技术的优势</h2>
+
+<p>Beacon技术的优势其实就是低功耗蓝牙的优势。大部分的Beacon硬件连接范围达到200英尺，而且低功耗蓝牙不像WiFi那样需要网络连接，低功耗蓝牙只要有两个点就能运作起来。</p>
+
+<h2>Beacon的应用</h2>
+
+<ol>
+<li>零售
+通过Beacon向用户推送优惠信息，收集顾客在店内的消费数据。零售店主显然是第一波吃螃蟹的人。</li>
+<li>支付
+零售业同样是最先开始试水的一支，但这项的使用场景还会扩张。比如当用户进入或者离开一个场地时，自动发起一次支付（用于景点之类的购票）。</li>
+<li>交通
+机场、火车站、地铁换乘站针对乘客的信息推送。目前只是换乘、导航、天气信息，但未来可以发展成行程服务信息，比如当乘客到达后自动打车。</li>
+<li>家居
+同样是基于地理围栏的信息通知，比如告诉父母孩子回到家里了。</li>
+</ol>
+
+
+<h2>Beacon设备的技术原理</h2>
+
+<p>一个Beacon基站主要有三部分标识：</p>
+
+<ol>
+<li>UUID，形如：206A2476-D4DB-42F0-BF73-030236F2C756。用来标识某一个公司。比如，某个房地产公司的全部的基站都用同一个UUID。</li>
+<li>major，用来标识某一类的beacon。比如这个房地产公司的北京的房子都设定为1，上海的都设定为2。</li>
+<li>minor，用来标识某一个特定的beacon。比如某栋楼的某个基站。</li>
+</ol>
+
+
+<p>Beacon设备发送信号成为一个Beacon基站。然后另一个设备比如iPhone可以用一款App来监听附近某个UUID的Beacon基站，就算程序被关闭后，如果iPhone在附近发现此UUID的Beacon基站，App就能被唤醒，并且在iPhone锁屏界面的右下角会出现App的小图标。</p>
+
+<p>一般情况下如果一个商场在自己商场里面铺设很多的Beacon基站。所有Beacon的UUID应该是一样的。同一楼层Beacon基站的major可以一样，同一商店Beacon的minor值一样。</p>
+
+<h2>Beacon在IOS设备上的实现</h2>
+
+<p>Beacon需要CoreBluetooth.framework和CoreLocation.framework两个framework,先把他们加到项目中。</p>
+
+<h4>发送Beacon信号：</h4>
+
+<pre><code>
+self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:nil];
+
+time_t t;
+srand((unsigned) time(&t));
+CLBeaconRegion *region = [[CLBeaconRegion alloc] initWithProximityUUID:self.beaconRegion.proximityUUID major:rand() minor:rand() identifier:self.beaconRegion.identifier];
+
+NSDictionary *beaconPeripheralData = [region peripheralDataWithMeasuredPower:nil];
+[self.peripheralManager startAdvertising:beaconPeripheralData];
+</code></pre>
+
+
+<h6>需要实现CoreBluetooth里的CBPeripheralManagerDelegate的代理方法</h6>
+
+<pre><code>
+//pragma mark - Beacon advertising delegate methods
+- (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager *)peripheralManager error:(NSError *)error
+{
+    if (error) {
+        NSLog(@"Couldn't turn on advertising: %@", error);
+        return;
+    }
+    
+    if (peripheralManager.isAdvertising) {
+    }
+}
+
+- (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheralManager
+{
+    if (peripheralManager.state != CBPeripheralManagerStatePoweredOn) {
+        NSLog(@"Peripheral manager is off.");
+        return;
+    }
+
+    NSLog(@"Peripheral manager is on.");
+}
+</code></pre>
+
+
+<h4>监控附近的Beacon基站</h4>
+
+<pre><code>
+self.locationManager = [[CLLocationManager alloc] init];
+self.locationManager.delegate = self;
+
+//kUUID可以设置为一个定值，就是监控附近为此UUID的beacon设备。
+
+NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:kUUID];
+self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID identifier:kIdentifier];
+self.beaconRegion.notifyEntryStateOnDisplay = YES;
+
+//开始接收
+[self.locationManager startMonitoringForRegion:self.beaconRegion];
+
+//停止接收
+[self.locationManager stopMonitoringForRegion:self.beaconRegion];
+</code></pre>
+
+
+<h6>需要实现CoreLocation里的CLLocationManagerDelegate的代理方法</h6>
+
+<pre><code>
+//程序会不断调用此方法，beacons包含所有发现的Beacon基站
+- (void)locationManager:(CLLocationManager *)manager
+        didRangeBeacons:(NSArray *)beacons
+               inRegion:(CLBeaconRegion *)region {
+}
+
+//进入beacon区域
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
+{
+    NSLog(@"Entered region: %@", region);
+}
+
+//出beacon区域
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
+{
+    NSLog(@"Exited region: %@", region);
+}
+
+//在上面两个方法被调用之后调用
+- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region
+{
+   
+}
+</code></pre>
+
+
+<h4>接受Beacon基站发送的信息</h4>
+
+<pre><code>
+self.locationManager = [[CLLocationManager alloc] init];
+self.locationManager.delegate = self;
+
+NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:kUUID];
+self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID identifier:kIdentifier];
+self.beaconRegion.notifyEntryStateOnDisplay = YES;
+
+//接受Beacon基站的推送信息
+[self.locationManager startRangingBeaconsInRegion:self.beaconRegion];
+//停止Beacon基站的推送信息
+[self.locationManager stopRangingBeaconsInRegion:self.beaconRegion];
+</code></pre>
+
+
+<h3>参考</h3>
+
+<p>iBeacon的一些介绍：<a href="http://www.cocoachina.com/industry/20140730/9275.html">iBeacon 的第一篇（基于Swift实现）</a></p>
+
+<p>Github开源项目<a href="https://github.com/nicktoumpelis/HiBeacons">HiBeacons</a></p>
+
+<p>苹果官方iBeacon例子<a href="https://developer.apple.com/library/ios/samplecode/airlocate/introduction/intro.html">AirLocate: Using CoreLocation to monitor, range, and configure your device as an iBeacon</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/posts/4">&larr; Older</a>
@@ -403,10 +552,6 @@ KeychainItemWrapper
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2016/05/17/shi-mian-liao/">失眠了</a>
-      </li>
     
       <li class="post">
         <a href="/blog/2016/05/14/hai-shang-gang-qin-shi/">海上钢琴师</a>
@@ -426,6 +571,10 @@ KeychainItemWrapper
     
       <li class="post">
         <a href="/blog/2015/09/05/shi-yong-pythonku-elementtreejie-xi-xmlwen-jian/">使用Python库ElementTree解析XML文件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/12/dai-bu-zou-de-shi-qing-chun/">再见了，北京</a>
       </li>
     
   </ul>
