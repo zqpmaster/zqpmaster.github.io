@@ -4,7 +4,7 @@
   <title><![CDATA[Max Blog]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2016-05-17T13:41:10+08:00</updated>
+  <updated>2016-05-21T10:47:27+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -56,9 +56,9 @@
 
 <p>写博客的次数也是越来越少了，我也没有要求自己多长时间写一篇之类的。程序员也不是非要写博客，博客写的好也代表不了什么。</p>
 
-<p>回顾一下2015年下半年，我逃离了北京。广州总的来说还是很舒服的。没有北上深那种高房价带来的压力，也没有二线城市的那些不便。不过哪个城市都有它阴暗的地方，所以深究去对比也没什么意思。</p>
+<p>回顾一下2015年下半年，我逃离了北京来到广州。广州总的来说还是很舒服的。没有北上深那种高房价带来的压力，也没有二线城市的那些不便。不过哪个城市都有它阴暗的地方，所以深究去对比也没什么意思。</p>
 
-<p>想太远想太多总是容易开始浮躁，所以还是做好手头的事情吧。今年还是跟过去的每一年都一样，当每件好事或者坏事来临的时候，都要坦然接受。并且要尽力去经历更多的事情。</p>
+<p>想太远想太多总是容易开始浮躁，所以还是做好手头的事情吧。今年还是跟过去的每一年都一样，当每件好事或者坏事来临的时候，都要坦然接受。经历多了，见多了就知道什么才是最好的。</p>
 
 <p>2016年3月 广州</p>
 ]]></content>
@@ -630,17 +630,17 @@ self.beaconRegion.notifyEntryStateOnDisplay = YES;
 <h3>用到的几个工具</h3>
 
 <ol>
-<li>chrome的开发者工具   查看每次HTTP请求命令与参数等。</li>
-<li>AFNetworking    ios网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI好像好久没有更新。</li>
-<li>TFhepple    Html分析类库。</li>
+<li>Chrome的开发者工具   查看每次HTTP请求命令与参数等。</li>
+<li>AFNetworking    iOS网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI貌似已经不更新了。</li>
+<li>TFhepple    HTML解析库。</li>
 </ol>
 
 
-<p>在做数据层的时候，我先获取正方系统的html源码，然后解析成本地数据。这中间主要遇到了页面编码和模拟登陆两个问题。</p>
+<p>在做数据层的时候，我先获取正方系统的HTML源码，然后解析成本地数据。这中间主要遇到了页面编码和模拟登陆两个问题。</p>
 
 <h3>编码</h3>
 
-<p>正方教务系统因为没有对应的JSON或者XML数据接口，所以只能模拟网页的所有行为，获取html 分析html。
+<p>正方教务系统因为没有对应的JSON或者XML数据接口，所以只能模拟网页的所有行为，获取HTML 分析HTML。
 正方教务系统用的编码是GB2312 框架获取下来的NSString虽然已经自动解码，但是很不稳定，有时候会得到空字符串，但是获取下来的DATA就没有这个问题，所以就要手动解码将DATA转为NSString。</p>
 
 <pre><code>NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);                 
@@ -702,7 +702,7 @@ _cookieDictionary= [NSHTTPCookie requestHeaderFieldsWithCookies:cookies];
 
 <p></p>
 
-<p>模拟登陆提交的参数有 用户名,密码，验证码还有一个viewstate，这个viewstate每次都得在登陆前获取验证码图片的时候同时获取 还是通过GET请求得到页面通过html分析工具得到对应的viwestate，具体可以看我的DEMO.然后在提交参数的时候一并提
+<p>模拟登陆提交的参数有 用户名,密码，验证码还有一个viewstate，这个viewstate每次都得在登陆前获取验证码图片的时候同时获取 还是通过GET请求得到页面通过HTML分析工具得到对应的viwestate，具体可以看我的DEMO.然后在提交参数的时候一并提
 交。</p>
 
 <pre><code> 
