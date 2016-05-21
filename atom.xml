@@ -4,7 +4,7 @@
   <title><![CDATA[Max Blog]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2016-05-21T10:47:27+08:00</updated>
+  <updated>2016-05-21T10:49:40+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -630,9 +630,9 @@ self.beaconRegion.notifyEntryStateOnDisplay = YES;
 <h3>用到的几个工具</h3>
 
 <ol>
-<li>Chrome的开发者工具   查看每次HTTP请求命令与参数等。</li>
-<li>AFNetworking    iOS网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI貌似已经不更新了。</li>
-<li>TFhepple    HTML解析库。</li>
+<li>Chrome的开发者工具: 查看每次HTTP请求命令与参数等。</li>
+<li>AFNetworking: iOS网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI貌似已经不更新了。</li>
+<li>TFhepple: HTML解析库。</li>
 </ol>
 
 
