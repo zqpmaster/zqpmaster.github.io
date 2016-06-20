@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>如何使用XIB设置视图的更多属性 - Max Blog</title>
+  <title>愿无岁月可回头 - Max Blog</title>
   <meta name="author" content="一切从简">
 
   
-  <meta name="description" content="最近遇到了将ScrollView放在XIB的视图里，用代码设置contentSize后，scrollView不能滑动的问题。费了很大劲之后找到正确的办法，并且发现XIB的一个极为实用的技巧。如果想用XIB设置视图更多的属性。可以使用Identity inspector下的User Defined &hellip;">
+  <meta name="description" content="最近可谓是心事重重，躺在床上闭上眼就开始思绪乱飞，这导致我越睡越没有精神。 昨晚上看了个电影叫北京遇上西雅图二，还没有看完，也不知道这部电影的重点到底在哪，反正看来看去让我感觉两位主角在异国他乡打拼的真是艰辛。或许是我没有看完的缘故。 这两天来成都旅游，看了看都江堰，在成都天府广场附近买了一些东西 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.sheliw.com/blog/2014/10/25/ru-he-shi-yong-xibshe-zhi-shi-tu-de-geng-duo-shu-xing/">
+  <link rel="canonical" href="http://blog.sheliw.com/blog/2016/06/20/yuan-wu-sui-yue-ke-hui-tou/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Max Blog" type="application/atom+xml">
@@ -73,7 +73,7 @@
   
   <header>
     
-      <h1 class="entry-title">如何使用XIB设置视图的更多属性</h1>
+      <h1 class="entry-title">愿无岁月可回头</h1>
     
     
       <p class="meta">
@@ -82,26 +82,22 @@
 
 
 
-<time class='entry-date' datetime='2014-10-25T13:37:20+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>1:37 pm</span></time>
+<time class='entry-date' datetime='2016-06-20T19:38:25+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>7:38 pm</span></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>最近遇到了将ScrollView放在XIB的视图里，用代码设置contentSize后，scrollView不能滑动的问题。费了很大劲之后找到正确的办法，并且发现XIB的一个极为实用的技巧。如果想用XIB设置视图更多的属性。可以使用Identity inspector下的User Defined Runtime Attribute.添加一些KeyPath.</p>
+<div class="entry-content"><p>最近可谓是心事重重，躺在床上闭上眼就开始思绪乱飞，这导致我越睡越没有精神。</p>
 
-<p>1.在XIB里选中视图。</p>
+<p>昨晚上看了个电影叫北京遇上西雅图二，还没有看完，也不知道这部电影的重点到底在哪，反正看来看去让我感觉两位主角在异国他乡打拼的真是艰辛。或许是我没有看完的缘故。</p>
 
-<p>2.切换到Identity inspector, 新建一个新的User Defined Runtime Attribute (点击  + 按钮)。</p>
+<p>这两天来成都旅游，看了看都江堰，在成都天府广场附近买了一些东西。感觉成都是一个节奏比较慢，也挺繁华的一个都市，但是和广州一样热。也挺潮湿的。在都江堰我还还意外发现一家清真寺，清真寺附近很多清真餐馆，也遇到了很多说四川话的回族，看着很亲切又很陌生。旅行结束了，现在在成都双流机场准备回家呆一两天，然后再回广州。</p>
 
-<p>3.双击Key Path,改为要设置的属性。</p>
+<p>回广州之后，继续开始认真工作。希望和HR说的一样，以后希望我能发展顺利吧。</p>
 
-<p>4.双击Type，改为要设置的属性的类型.</p>
-
-<p>5.更改Value为要设置的值。</p>
-
-<p>Swift语言貌似可以使用@IBInspectable和@IBDesignable 直接在Storyboard和Xib里添加设置选项</p>
+<p>2016年6月 成都</p>
 </div>
 
 
@@ -117,7 +113,7 @@
 
 
 
-<time class='entry-date' datetime='2014-10-25T13:37:20+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>1:37 pm</span></time>
+<time class='entry-date' datetime='2016-06-20T19:38:25+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>7:38 pm</span></time>
       
 
 
@@ -132,10 +128,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/10/25/zheng-fang-jiao-wu-guan-li-xi-tong-ioske-hu-duan/" title="Previous Post: 正方教务管理系统IOS客户端">&laquo; 正方教务管理系统IOS客户端</a>
+        <a class="basic-alignment left" href="/blog/2016/05/14/hai-shang-gang-qin-shi/" title="Previous Post: 海上钢琴师">&laquo; 海上钢琴师</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/11/11/ibeacon/" title="Next Post: 探寻Beacon技术">探寻Beacon技术 &raquo;</a>
       
     </p>
   </footer>
@@ -224,8 +218,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://blog.sheliw.com/blog/2014/10/25/ru-he-shi-yong-xibshe-zhi-shi-tu-de-geng-duo-shu-xing/';
-        var disqus_url = 'http://blog.sheliw.com/blog/2014/10/25/ru-he-shi-yong-xibshe-zhi-shi-tu-de-geng-duo-shu-xing/';
+        var disqus_identifier = 'http://blog.sheliw.com/blog/2016/06/20/yuan-wu-sui-yue-ke-hui-tou/';
+        var disqus_url = 'http://blog.sheliw.com/blog/2016/06/20/yuan-wu-sui-yue-ke-hui-tou/';
         var disqus_script = 'embed.js';
       
     (function () {
