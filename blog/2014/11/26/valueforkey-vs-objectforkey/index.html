@@ -104,7 +104,7 @@
 
 <p>If key does not start with “@”, invokes <code>objectForKey:</code>. If key does start with “@”, strips the “@” and invokes <code>[super valueForKey:]</code> with the rest of the key.</p></blockquote>
 
-<p>总之，从速度，异常安全方面考虑我们应该在能用<code>objectForKey:</code>的地方就不要用<code>valueForKey:</code>。</p>
+<p>总之，从速度，异常安全方面考虑我们应该优先使用<code>objectForKey:</code>，而不是<code>valueForKey:</code>。</p>
 </div>
 
 
