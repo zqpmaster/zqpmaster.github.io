@@ -9,8 +9,7 @@
   <meta name="author" content="一切从简">
 
   
-  <meta name="description" content="最近和朋友一起做完了学校的教务系统iOS客户端，这里写一下我遇到的一些问题和心得。 用到的几个工具 Chrome的开发者工具: 查看每次HTTP请求命令与参数等。
-AFNetworking: iOS网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单， &hellip;">
+  <meta name="description" content="1) Link binary with iAd.frameworkhttps://developer.apple.com/library/ios/#recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html 1. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,135 +70,6 @@ AFNetworking: iOS网络请求开源框架，同样的有ASIHttprequest。选择A
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/25/zheng-fang-jiao-wu-guan-li-xi-tong-ioske-hu-duan/">正方教务管理系统IOS客户端</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-10-25T13:16:47+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>1:16 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近和朋友一起做完了学校的教务系统iOS客户端，这里写一下我遇到的一些问题和心得。</p>
-
-<h3>用到的几个工具</h3>
-
-<ol>
-<li>Chrome的开发者工具: 查看每次HTTP请求命令与参数等。</li>
-<li>AFNetworking: iOS网络请求开源框架，同样的有ASIHttprequest。选择AFnetworking是因为它更简单，并且现在还在更新维护，ASI貌似已经不更新了。</li>
-<li>TFhepple: HTML解析库。</li>
-</ol>
-
-
-<p>在做数据层的时候，我先获取正方系统的HTML源码，然后解析成本地数据。这中间主要遇到了页面编码和模拟登陆两个问题。</p>
-
-<h3>编码</h3>
-
-<p>正方教务系统因为没有对应的JSON或者XML数据接口，所以只能模拟网页的所有行为，获取HTML 分析HTML。
-正方教务系统用的编码是GB2312 框架获取下来的NSString虽然已经自动解码，但是很不稳定，有时候会得到空字符串，但是获取下来的DATA就没有这个问题，所以就要手动解码将DATA转为NSString。</p>
-
-<pre><code>NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);                 
-NSData *data=responseObject;
-NSString *transStr=[[NSString alloc]initWithData:data encoding:enc];&lt;/code&gt;&lt;/pre&gt;
-</code></pre>
-
-<p>光转码也不行，在分析HTML的时候因为网页头部的编码信息也有问题，所以要做手动修改，这样才能被TFhepple正确解
-析。</p>
-
-<pre><code> 
- NSString *utf8HtmlStr = [transStr stringByReplacingOccurrencesOfString:@"http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\">" withString:@"http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"];
-NSData *htmlDataUTF8 = [utf8HtmlStr dataUsingEncoding:NSUTF8StringEncoding];
-TFHpple *xpathParser = [[TFHpple alloc]initWithHTMLData:htmlDataUTF8];</code></pre>
-
-
-<p>
-成绩页面修改的方式有所不同</p>
-
-<pre><code>
-NSString *utf8HtmlStr = [transStr stringByReplacingOccurrencesOfString:@"content=\"text/html; charset=gb2312\" http-equiv=\"Content-Type\">" withString:@"http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"];</code></pre>
-
-
-<p>其他页面要怎么替换具体要看页面头部具体的信息是什么，然后写在 stringByReplacingOccurrencesOfString方法第一个参数部分就可以。</p>
-
-<h3>模拟登陆</h3>
-
-<p>模拟登陆第一步要获取Cookie，这个用 NSURLRequest就能获取到，之后要在每次请求的时候加到 NSMutableURLRequest 里。AFnetworking在每次请求的时候都会建立一个NSURLRequest对象，改这个就可以。代码如下
-获取cookie</p>
-
-<pre><code> 
- NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"
-http://学校的网址/default2.aspx"]];
-//  cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-                                            //timeoutInterval:3];
-[NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-NSArray *cookies =[cookieJar cookies];
-_cookieDictionary= [NSHTTPCookie requestHeaderFieldsWithCookies:cookies];
-</code></pre>
-
-
-<p>
-获取验证码的时候必须带上cookie,每次post或者get需要带上的是登陆成功后保存下来的cookie。</p>
-
-<pre><code> 
-- (AFHTTPRequestOperation *)POST:(NSString *)URLString
-                      parameters:(NSDictionary *)parameters
-                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:@"POST" URLString:[[NSURL URLWithString:URLString relativeToURL:self.baseURL] absoluteString] parameters:parameters error:nil];
-    if(self.cookieDictionary) {
-        [request setHTTPShouldHandleCookies:NO];
-        [request setAllHTTPHeaderFields:self.cookieDictionary];
-    }
-</code></pre>
-
-
-<p></p>
-
-<p>模拟登陆提交的参数有 用户名,密码，验证码还有一个viewstate，这个viewstate每次都得在登陆前获取验证码图片的时候同时获取 还是通过GET请求得到页面通过HTML分析工具得到对应的viwestate，具体可以看我的DEMO.然后在提交参数的时候一并提
-交。</p>
-
-<pre><code> 
-NSDictionary *parameters = @{@"__VIEWSTATE":self.viewState,@"txtUserName"self.xueHao.text,@"TextBox2":self.miMa.text,@"txtSecretCode":self.yanZhengMa.text,@"RadioButtonList1":@"学生",@"Button1":@""};
-</code></pre>
-
-
-<p>
-登陆成功之后就可以用cookie随意访问各个页面了。。不过在请求查询成绩页面的时候还要提交一个viewState,这个viewState参数是从登陆成功后的第一个页面获取，Very long。
-并且在访问内部所有页面的时候都要在Request Header里加一个refer参数，这个参数跟提交cookie是一样的道理，学校的系统这个东西不提交不行，但是随便提交一个任何人的页面地址居然就可以了。这部分也是加在AFHTTPRequestOperationManager类里实现文件post 和get 方法底下。</p>
-
-<pre><code> 
-   if(self.cookieDictionary) {
-        NSMutableDictionary *newDictionary=[self.cookieDictionary mutableCopy];
-        [newDictionary setValue:@"http://gdjwgl.bjut.edu.cn/xs_main.aspx?xh=11111111" forKey:@"Referer"];
-        [request setAllHTTPHeaderFields:newDictionary];   
-    }
-</code></pre>
-
-
-<p></p>
-
-<p>demo地址：<a href="https://github.com/zqpmaster/FangZhengJiaoWU">正方教务系统iOS客户端Demo</a></p>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -414,6 +284,169 @@ GCD更接近底层，而NSOperationQueue则更高级抽象，所以GCD在追求�
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/04/block/">Block, weakSelf and strongSelf</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-04T15:07:23+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>3:07 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Block is powerful in Objective-C. But there is a very stupid problem called cyclic retention pitfall, that a block locked an object so that the object will never be release.</p>
+
+<p>For example, in the function:</p>
+
+<pre><code>
+NSBlockOperation *op = [[[NSBlockOperation alloc] init] autorelease];
+[ op addExecutionBlock:^ {
+    [self doSomething];
+    [self doMoreThing];
+} ];
+[someOperationQueue addOperation:op];
+</code></pre>
+
+
+<p>When the block is created, the compiler will capture all objects that used inside the block and add reference count by 1. In this case, self will be locked and so the object will not be released until the block is finished. Note that cyclic retention pitfall is not only happened in self object, but in 99% case, it happens in self object.</p>
+
+<h2>Weakify</h2>
+
+<p>To solve the problem, we can simply create a weak reference of the self, and use the weak object instead of the original object inside block. When the weak object is used, the block will not increase the reference count, so self will not be locked. We call to weakify the self.</p>
+
+<pre><code>
+__weak __typeof__(self) weakSelf = self;
+NSBlockOperation *op = [[[NSBlockOperation alloc] init] autorelease];
+[ op addExecutionBlock:^ {
+    [weakSelf doSomething];
+    [weakSelf doMoreThing];
+} ];
+[someOperationQueue addOperation:op];
+</code></pre>
+
+
+<h2>When should use weakify</h2>
+
+<p>The block will release all objects used inside the blocks scope after the block is finished. If the block is execution type block that will be released after execution is finished, e.g.:</p>
+
+<ul>
+<li>GCD dispatch block</li>
+<li>Most UIKit block</li>
+</ul>
+
+
+<p>It should be safe not to use weakify technique because the block&rsquo;s lifetime is determined. However, if you are using block that will store block as variable, e.g.:</p>
+
+<ul>
+<li>Blocks in NSOperation, AFHTTPRequestOperation</li>
+<li>Event handler block like something in BlocksKit</li>
+</ul>
+
+
+<p>Because the lifetime of the block is uncertained, it is suggested to use weakify to prevent cyclic retention pitfall.</p>
+
+<p>Use AFHTTPRequestOperation as an example, if you simple call:</p>
+
+<pre><code>
+AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+op.responseSerializer = [AFJSONResponseSerializer serializer];
+[op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self doSomethingUpdateControls];
+    NSLog(@"JSON: %@", responseObject);
+} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSLog(@"Error: %@", error);
+}];
+[op start];
+</code></pre>
+
+
+<p>self will be locked until the network operation finished. It may be okay in most case because it will at most cost several seconds to complete the operation.</p>
+
+<p>But, if you are handling operations using operation queue:</p>
+
+<pre><code>
+AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+op.responseSerializer = [AFJSONResponseSerializer serializer];
+[op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self doSomethingUpdateControls];
+    NSLog(@"JSON: %@", responseObject);
+} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSLog(@"Error: %@", error);
+}];
+[[NSOperationQueue mainQueue] addOperation:op];
+</code></pre>
+
+
+<p>There will be chance that the operation will be paused in the queue. When the operation object is not released, it will lock the block scope and so theself object. In this case, if the self object is a viewController and if you don&rsquo;t want to use weakify technique, you must make sure that you have to cancel all operations
+[[NSOperationQueue mainQueue] removeAllOperations] at some point like [viewDidDisappeared:(BOOL)animated].</p>
+
+<h2>Strongify</h2>
+
+<p>But there is another problem, because now the self is weakified. Now self will be free and weakSelf can be nil any time. In the above case, the block may able to run doSomething but failed to run doMoreThing because weakSelf may be nullified at that time.</p>
+
+<p>To solve this, we can strongify self before use:</p>
+
+<pre><code>
+__weak __typeof__(self) weakSelf = self;
+NSBlockOperation *op = [[[NSBlockOperation alloc] init] autorelease];
+[ op addExecutionBlock:^ {
+    __strong __typeof__(self) strongSelf = weakSelf;
+    [strongSelf doSomething];
+    [strongSelf doMoreThing];
+} ];
+[someOperationQueue addOperation:op];
+</code></pre>
+
+
+<p>So self will not be released inside the block call until the life cycle of the strongSelf ends.</p>
+
+<h2>When should use strongify</h2>
+
+<p>However, should we use strongSelf every time inside a block?</p>
+
+<p>Yes, it’s safe to use it every time.</p>
+
+<p>No, sometimes you can simply use the weakSelf when:</p>
+
+<ul>
+<li>You don&rsquo;t care that self will be nullified in the middle of the block. e.g. setting control’s value. Note that although weakSelf may be released in the middle, it will be nullified and will not crash the code.</li>
+<li>You are sure that the self will not be released in the middle. e.g. All block are running in main thread.</li>
+</ul>
+
+
+<h2>Syntax Sugar</h2>
+
+<p>We can use a third party library libextobjc so that you can some more readable code like this:</p>
+
+<pre><code>
+@weakify(self);
+NSBlockOperation *op = [[[NSBlockOperation alloc] init] autorelease];
+[ op addExecutionBlock:^ {
+    @strongify(self);   
+    [self doSomething];
+    [self doMoreThing];
+} ];
+[someOperationQueue addOperation:op];
+</code></pre>
+
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/posts/6">&larr; Older</a>
@@ -429,10 +462,6 @@ GCD更接近底层，而NSOperationQueue则更高级抽象，所以GCD在追求�
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2016/08/08/lai-shen-zhen-de-di-%5B%3F%5D-ge-yue/">来深圳的第一个月</a>
-      </li>
     
       <li class="post">
         <a href="/blog/2016/06/20/yuan-wu-sui-yue-ke-hui-tou/">记2016年6月</a>
@@ -452,6 +481,10 @@ GCD更接近底层，而NSOperationQueue则更高级抽象，所以GCD在追求�
     
       <li class="post">
         <a href="/blog/2016/01/20/wo-yao-cai-geng-duo-de-chu-ju/">我会采更多的雏菊</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/09/05/shi-yong-pythonku-elementtreejie-xi-xmlwen-jian/">使用Python库ElementTree解析XML文件</a>
       </li>
     
   </ul>

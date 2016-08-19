@@ -4,7 +4,7 @@
   <title><![CDATA[Max Blog]]></title>
   <link href="http://blog.sheliw.com/atom.xml" rel="self"/>
   <link href="http://blog.sheliw.com/"/>
-  <updated>2016-08-12T22:51:49+08:00</updated>
+  <updated>2016-08-19T11:42:41+08:00</updated>
   <id>http://blog.sheliw.com/</id>
   <author>
     <name><![CDATA[一切从简]]></name>
@@ -12,15 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[来深圳的第一个月]]></title>
-    <link href="http://blog.sheliw.com/blog/2016/08/08/lai-shen-zhen-de-di-%5B%3F%5D-ge-yue/"/>
-    <updated>2016-08-08T22:10:47+08:00</updated>
-    <id>http://blog.sheliw.com/blog/2016/08/08/lai-shen-zhen-de-di-[?]-ge-yue</id>
-    <content type="html"><![CDATA[<p>—— 多情总被无情扰，不如代码写到老。</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[记2016年6月]]></title>

@@ -3,14 +3,6 @@
   
   
   <url>
-    <loc>http://blog.sheliw.com/blog/2016/08/08/lai-shen-zhen-de-di-%5B%3F%5D-ge-yue/</loc>
-    
-    <lastmod>2016-08-08T22:10:47+08:00</lastmod>
-    
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
     <loc>http://blog.sheliw.com/blog/2016/06/20/yuan-wu-sui-yue-ke-hui-tou/</loc>
     
     <lastmod>2016-06-20T19:38:25+08:00</lastmod>
@@ -141,21 +133,21 @@
   
   <url>
     <loc>http://blog.sheliw.com/blog/archives/</loc>
-    <lastmod>2016-08-12T22:51:49+08:00</lastmod>
+    <lastmod>2016-08-19T11:42:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://blog.sheliw.com/</loc>
-    <lastmod>2016-08-12T22:51:49+08:00</lastmod>
+    <lastmod>2016-08-19T11:42:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://blog.sheliw.com/blog/categories/</loc>
-    <lastmod>2016-08-12T22:51:49+08:00</lastmod>
+    <lastmod>2016-08-19T11:42:41+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
