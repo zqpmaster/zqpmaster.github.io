@@ -9,7 +9,7 @@
   <meta name="author" content="一切从简">
 
   
-  <meta name="description" content="转眼间，2016已经开始两个月了。来公司也已经接近七个月。 写博客的次数也是越来越少了，我也没有要求自己多长时间写一篇之类的。程序员也不是非要写博客，博客写的好也代表不了什么。 回顾一下2015年下半年，我逃离了北京来到广州。广州总的来说还是很舒服的。没有北上深那种高房价带来的压力， &hellip;">
+  <meta name="description" content="MXCardLayout是仿照iOS9多任务切换实现的一个卡片流布局。这是我的第一个在咖啡馆完成的项目。 Github地址：https://github.com/zqpmaster/MXCardLayout 写完这个项目后，最大的收获是：在zoo coffee和各种不知名的小咖啡馆写代码最好， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +70,41 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/04/30/mxcardlayout/">MXCardLayout</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-04-30T00:08:55+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>12:08 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>MXCardLayout是仿照iOS9多任务切换实现的一个卡片流布局。这是我的第一个在咖啡馆完成的项目。</p>
+
+<p>Github地址：<a href="https://github.com/zqpmaster/MXCardLayout">https://github.com/zqpmaster/MXCardLayout</a></p>
+
+<p><img src="http://ww3.sinaimg.cn/large/6f298b86gw1f5pvdkiwp7g208w0fskjl.gif" alt="" /></p>
+
+<p>写完这个项目后，最大的收获是：在zoo coffee和各种不知名的小咖啡馆写代码最好，因为人少：）</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -175,95 +210,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/09/05/shi-yong-pythonku-elementtreejie-xi-xmlwen-jian/">使用Python库ElementTree解析XML文件</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-09-05T19:18:30+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>7:18 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近打算做一个比较两个XML文件的小工具，然后就找到了Python的ElementTree，这个库非常高效，API也非常简洁。Python也有很多其他库可以用来解析XML文件。具体的对比请看这篇文章。</p>
-
-<p><a href="http://pycoders-weekly-chinese.readthedocs.org/en/latest/issue6/processing-xml-in-python-with-element-tree.html">http://pycoders-weekly-chinese.readthedocs.org/en/latest/issue6/processing-xml-in-python-with-element-tree.html</a></p>
-
-<p>上面这篇文章也介绍了一些使用ElementTree基本的方法。但是我在实际使用过程中遇到了很多其他的问题，比如没法处理XML文件内的注释，转义符等。最后对这些问题我也找到了一些解决办法。</p>
-
-<h3>注释</h3>
-
-<pre><code>&lt;Text&gt;
-&lt;!-- 注释 --&gt;
-&lt;/Text&gt;
-</code></pre>
-
-<p>我做的工具是先读取一个XML文件，然后和另一个XML文件做比较，再做一些修改，最后再写回原文件中。但是ElementTree默认会把XML文件的注释给忽略了，也就是XML文件写回去时之前的注释全不见了。最后发现重写xml.etree.cElementTree.XMLTreeBuilder内部的_parser.CommentHandler方法就可以解决这个问题。</p>
-
-<pre><code>
-import xml.etree.cElementTree as ET
-
-class CommentedTreeBuilder(ET.XMLTreeBuilder):
-    def __init__(self):
-        ET.XMLTreeBuilder.__init__(self)
-        # assumes ElementTree 1.2.X
-        self._parser.CommentHandler = self.handle_comment
-
-    def handle_comment(self, data):
-        self._target.start(ET.Comment, {})
-        self._target.data(data)
-        self._target.end(ET.Comment)
-        
- with open('test.xml', 'r') as f:
-        tree = ET.parse(f, parser=CommentedTreeBuilder())
-
-</pre>
-
-
-<p></code>
-但是这样解析XML文件之后，每一行的注释就会被当成一个普通的Element元素了，如果我们把它当作普通的元素去和其他元素比较，修改的时候就很容易出现问题。不过要判断这种注释元素也很简单，因为这种注释元素的tag类型并不是string类型。</p>
-
-<pre><code>root = tree.getroot()
-for item in root:
-    iscomment = (type(item.tag) != type('str'))
-</code></pre>
-
-<h3>转义符</h3>
-
-<p>用ElementTree的write()方法默认会对以下几种字符做转义，也就是字符串写入XML文件时遇到这三个字符都会被替换。</p>
-
-<pre><code>
-     if "&" in text:
-         text = text.replace("&", "&amp;")
-     if "<" in text:
-         text = text.replace("<", "&lt;")
-     if ">" in text:
-         text = text.replace(">", "&gt;")
-</pre>
-
-
-<p></code>
-这样虽然能保证生成的XML文件格式不出错。但是如果我还想让生成的XML文件内对空格，双引号，单引号做转义的话就比较难了。就算我在使用write()方法生成XML文件前用 xml.sax.saxutils.escape()方法手动转义，write()方法也会把所有&amp;字符给替换了。因为空格，双引号，单引号被转义后都是有&amp;字符的。</p>
-
-<p>最后没有想到其他好办法，只好把ElementTree库拷贝了一份出来，然后对内部的_escape_cdata方法做了一些修改，然后就大功告成了。如果你有好的办法，请留言告诉我。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/3">&larr; Older</a>
@@ -279,6 +225,10 @@ for item in root:
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/01/15/2017/">2017</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/06/20/yuan-wu-sui-yue-ke-hui-tou/">记2016年6月</a>
@@ -298,10 +248,6 @@ for item in root:
     
       <li class="post">
         <a href="/blog/2016/01/20/wo-yao-cai-geng-duo-de-chu-ju/">我会采更多的雏菊</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/09/05/shi-yong-pythonku-elementtreejie-xi-xmlwen-jian/">使用Python库ElementTree解析XML文件</a>
       </li>
     
   </ul>
