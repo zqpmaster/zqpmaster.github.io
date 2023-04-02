@@ -1,4 +1,3 @@
-User-agent: Baiduspider
-Disallow: /
-
-Sitemap: http://blog.sheliw.com/sitemap.xml 
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
